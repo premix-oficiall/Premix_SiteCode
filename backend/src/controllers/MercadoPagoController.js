@@ -32,7 +32,8 @@ exports.criarPreferenciaPagamento = async (req, res) => {
         pending: 'http://localhost:5500/pending.html'
       },
       external_reference: gestorId.toString(),
-      notification_url: 'https://slick-doodles-worry.loca.lt/api/webhooks/mercadopago'
+      // Linha ~30 - notification_url
+      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
     };
 
     console.log('📦 Enviando para MP:', requestBody);
@@ -98,7 +99,7 @@ exports.criarPagamentoExistente = async (req, res) => {
         pending: 'http://localhost:5500/pending.html'
       },
       external_reference: gestorId.toString(),
-      notification_url: 'https://slick-doodles-worry.loca.lt/api/webhooks/mercadopago'
+       notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
     };
 
     console.log('📦 Enviando pagamento existente para MP:', requestBody);

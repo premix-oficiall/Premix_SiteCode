@@ -1,0 +1,496 @@
+/* CSS da página de download - Nova versão com informações do produto */
+
+body {
+    background-color: #0f0f0f;
+}
+
+.download-main {
+    background-color: #0f0f0f;
+    color: #fff;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hero Section */
+.download-hero {
+    padding: 120px 20px 80px;
+    text-align: center;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fbca48;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-download.primary {
+    background-color: #fbca48;
+    color: #000;
+}
+
+.btn-download.primary:hover {
+    background-color: #e6b73a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 196, 72, 0.3);
+}
+
+.btn-download.secondary {
+    background-color: transparent;
+    color: #fbca48;
+    border-color: #fbca48;
+}
+
+.btn-download.secondary:hover {
+    background-color: #fbca48;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.btn-download.recommended {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-download.recommended::before {
+    content: "Recomendado";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.system-requirements {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Como Funciona */
+.how-it-works {
+    padding: 80px 0;
+    background-color: #111;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fbca48;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.feature-card {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.feature-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-card:hover {
+    border-color: #fbca48;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(251, 196, 72, 0.1);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #fbca48;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.feature-icon i {
+    font-size: 24px;
+    color: #000;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #ccc;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Benefícios */
+.benefits {
+    padding: 80px 0;
+    background-color: #0f0f0f;
+}
+
+.benefits-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.benefits-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fbca48;
+    margin-bottom: 40px;
+}
+
+.benefit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.5s ease;
+}
+
+.benefit-item.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.benefit-item i {
+    color: #4CAF50;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.benefit-item h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.benefit-item p {
+    color: #ccc;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Dashboard Preview */
+.dashboard-preview {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.preview-header {
+    background-color: #2a2a2a;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.preview-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #666;
+}
+
+.control:nth-child(1) { background-color: #ff5f57; }
+.control:nth-child(2) { background-color: #ffbd2e; }
+.control:nth-child(3) { background-color: #28ca42; }
+
+.preview-title {
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.preview-content {
+    padding: 24px;
+}
+
+.preview-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #0f0f0f;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fbca48;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preview-chart {
+    height: 120px;
+    background-color: #0f0f0f;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: end;
+}
+
+.chart-bars {
+    display: flex;
+    gap: 8px;
+    align-items: end;
+    width: 100%;
+    height: 100%;
+}
+
+.bar {
+    flex: 1;
+    background: linear-gradient(to top, #fbca48, #e6b73a);
+    border-radius: 2px 2px 0 0;
+    min-height: 20px;
+    animation: growBar 1s ease-out;
+}
+
+@keyframes growBar {
+    from { height: 0; }
+    to { height: var(--height, 50%); }
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fbca48;
+    margin-bottom: 16px;
+}
+
+.cta-content p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-cta.primary {
+    background-color: #fbca48;
+    color: #000;
+}
+
+.btn-cta.primary:hover {
+    background-color: #e6b73a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 196, 72, 0.3);
+}
+
+.btn-cta.secondary {
+    background-color: transparent;
+    color: #fbca48;
+    border-color: #fbca48;
+}
+
+.btn-cta.secondary:hover {
+    background-color: #fbca48;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .download-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-download {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .benefits-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .benefits-text {
+        order: 2;
+    }
+    
+    .benefits-image {
+        order: 1;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-cta {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .preview-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .download-hero {
+        padding: 100px 15px 60px;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .how-it-works h2,
+    .benefits-text h2,
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .feature-card {
+        padding: 20px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

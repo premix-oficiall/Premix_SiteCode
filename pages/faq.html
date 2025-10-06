@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - Perguntas Frequentes</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/faq.css">
+  <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+  <div class="logo">
+    <img src="../img/logobranca.png" alt="logo premix">
+  </div>
+  <div class="menu-e-botao">
+    <nav class="nav">
+      <ul>
+        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+        <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
+        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+      </ul>
+    </nav>
+    <a href="download.html" class="download-button">Download</a>
+  </div>
+</header>
+
+  <!-- CONTEÚDO -->
+  <main class="faq-container">
+    <div class="faq-header">
+      <h1>Perguntas Frequentes</h1>
+      <p>Encontre respostas para as dúvidas mais comuns sobre a PremiX</p>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Pesquisar perguntas..." class="search-input">
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-question">Como posso criar minha conta?</button>
+        <div class="faq-answer">
+          <p>Para criar sua conta, clique em "Cadastro" no menu e preencha os campos obrigatórios. Em seguida, confirme seu e-mail para ativar a conta.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">O serviço é gratuito?</button>
+        <div class="faq-answer">
+          <p>Oferecemos um plano gratuito com recursos limitados e planos pagos com funcionalidades avançadas para empresas que precisam de mais recursos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Posso usar em dispositivos móveis?</button>
+        <div class="faq-answer">
+          <p>Sim! Nosso sistema é totalmente responsivo e pode ser acessado via smartphones e tablets com a mesma funcionalidade da versão desktop.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Como entro em contato com o suporte?</button>
+        <div class="faq-answer">
+          <p>Você pode acessar a página "Contate-nos" e preencher o formulário. Nossa equipe responderá em até 24 horas úteis.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Como funciona o sistema de recompensas?</button>
+        <div class="faq-answer">
+          <p>O sistema de recompensas permite que gestores definam metas e prêmios para estagiários. Quando as metas são atingidas, as recompensas são liberadas automaticamente.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Posso integrar com outras ferramentas?</button>
+        <div class="faq-answer">
+          <p>Sim, oferecemos integrações com principais ferramentas de produtividade como Slack, Trello, Google Workspace e Microsoft Teams.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Como acompanho o desempenho da equipe?</button>
+        <div class="faq-answer">
+          <p>Através do dashboard analítico, você pode visualizar métricas em tempo real, relatórios de produtividade e gráficos de desempenho individual e da equipe.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Existe limite de usuários?</button>
+        <div class="faq-answer">
+          <p>O plano gratuito permite até 5 usuários. Nos planos pagos, você pode adicionar usuários ilimitados conforme a necessidade da sua empresa.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Como funciona o trabalho remoto/híbrido?</button>
+        <div class="faq-answer">
+          <p>Nossa plataforma foi desenvolvida especificamente para equipes remotas e híbridas, permitindo acompanhamento de tarefas, comunicação e produtividade independente da localização.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Posso personalizar as metas e tarefas?</button>
+        <div class="faq-answer">
+          <p>Sim! Você pode criar metas personalizadas, definir prazos, prioridades e categorias de tarefas de acordo com as necessidades específicas do seu projeto.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Os dados estão seguros?</button>
+        <div class="faq-answer">
+          <p>Utilizamos criptografia de ponta a ponta e seguimos as melhores práticas de segurança. Todos os dados são armazenados em servidores seguros com backup automático.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Como cancelo minha assinatura?</button>
+        <div class="faq-answer">
+          <p>Você pode cancelar sua assinatura a qualquer momento através das configurações da conta. O acesso permanece ativo até o final do período pago.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Script para abrir/fechar respostas
+    const questions = document.querySelectorAll(".faq-question");
+    questions.forEach(q => {
+      q.addEventListener("click", () => {
+        q.classList.toggle("active");
+        const answer = q.nextElementSibling;
+        if (answer.style.maxHeight) {
+          answer.style.maxHeight = null;
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+
+    // Script para funcionalidade de pesquisa
+    const searchInput = document.getElementById('searchInput');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Se não há termo de pesquisa, mostra todos os itens
+      if (searchTerm === '') {
+        faqItems.forEach(item => {
+          item.style.display = 'block';
+        });
+      }
+    });
+  </script>
+<script>
+(async function() {
+  const container = document.getElementById('header');
+  if (!container) return;
+
+  const isInPages = window.location.pathname.includes('/pages/');
+  const headerUrl = isInPages ? '../header.html' : 'header.html';
+
+  try {
+    const res = await fetch(headerUrl);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const html = await res.text();
+    container.innerHTML = html;
+
+    // Se estivermos em /pages/, prefixa '../' em URLs relativas dentro do header
+    if (isInPages) {
+      const toFix = [
+        { sel: 'img', attr: 'src' },
+        { sel: 'a', attr: 'href' },
+        { sel: 'link', attr: 'href' },
+        { sel: 'script', attr: 'src' }
+      ];
+      toFix.forEach(({sel, attr}) => {
+        container.querySelectorAll(sel).forEach(el => {
+          const val = el.getAttribute(attr);
+          if (!val) return;
+          if (val.startsWith('http') || val.startsWith('/') || val.startsWith('../') || val.startsWith('data:')) return;
+          el.setAttribute(attr, '../' + val);
+        });
+      });
+    }
+  } catch (err) {
+    console.error('Não foi possível carregar header:', err);
+
+    // Fallback simples (funciona quando abre com file://)
+    if (isInPages) {
+      container.innerHTML = `
+        <header class="header">
+          <div class="logo"><img src="../img/logobranca.png" alt="logo premix"></div>
+          <div class="menu-e-botao">
+            <nav class="nav"><ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="cadastro.html">Cadastro</a></li>
+            </ul></nav>
+            <a href="download.html" class="download-button">Download</a>
+          </div>
+        </header>
+      `;
+    } else {
+      container.innerHTML = `
+        <header class="header">
+          <div class="logo"><img src="img/logobranca.png" alt="logo premix"></div>
+          <div class="menu-e-botao">
+            <nav class="nav"><ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="pages/faq.html">FAQ</a></li>
+              <li><a href="pages/cadastro.html">Cadastro</a></li>
+            </ul></nav>
+            <a href="pages/download.html" class="download-button">Download</a>
+          </div>
+        </header>
+      `;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll(".nav-tab");
+
+        navLinks.forEach(link => {
+            let linkPath = link.getAttribute("href");
+            if (linkPath.startsWith("../")) {
+                linkPath = linkPath.substring(3); // Remove '../' for comparison
+            }
+            if (currentPath.includes(linkPath)) {
+                link.classList.add("active-tab");
+            } else {
+                link.classList.remove("active-tab");
+            }
+        });
+    });
+</script>
+

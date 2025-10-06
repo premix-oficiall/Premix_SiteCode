@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - PremiX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/pagamento.css">
+    <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="../img/logobranca.png" alt="logo premix">
+        </div>
+        <div class="menu-e-botao">
+            <nav class="nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+                    <li><a href="./faq.html" class="nav-tab faq-tab">FAQ</a></li>
+                    <li><a href="./cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
+                    <li><a href="./contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+                </ul>
+            </nav>
+            <a href="./download.html" class="download-button">Download</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="payment-section">
+            <div class="payment-container">
+                <div class="billing-address">
+                    <h2>ENDEREÇO DE COBRANÇA</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="full-name">Nome Completo*</label>
+                            <input type="text" id="full-name" placeholder="Digite seu nome completo">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail*</label>
+                            <input type="email" id="email" placeholder="seunome@email.com.br">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Endereço</label>
+                            <input type="text" id="address" placeholder="Localização">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" placeholder="São Paulo">
+                        </div>
+                        <div class="form-group-inline">
+                            <div class="form-group">
+                                <label for="country">País</label>
+                                <input type="text" id="country" placeholder="Brasil">
+                            </div>
+                            <div class="form-group">
+                                <label for="zip-code">Zip Code</label>
+                                <input type="text" id="zip-code" placeholder="123 456">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="payment-details">
+                    <h2>PAGAMENTO</h2>
+                    <div class="accepted-cards">
+                        <p>Cartões Aceitos*</p>
+                        <img src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal">
+                        <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
+                        <img src="https://img.icons8.com/color/48/000000/american-express.png" alt="American Express">
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="card-name">Nome Do Cartão*</label>
+                            <input type="text" id="card-name" placeholder="Nome do cartão">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Número Do Cartão*</label>
+                            <input type="text" id="card-number" placeholder="1111-2222-3333-4444">
+                        </div>
+                        <div class="form-group-triple-inline">
+                            <div class="form-group">
+                                <label for="validity-month">Cartão De Validade*</label>
+                                <input type="text" id="validity-month" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV*</label>
+                                <input type="text" id="cvv" placeholder="123">
+                            </div>
+                        </div>
+                        <!-- Aqui é onde a API do Mercado Pago seria integrada -->
+                        <!-- Exemplo de script de integração (substitua com seu código real do Mercado Pago ) -->
+                        <!-- <script src="https://sdk.mercadopago.com/js/v2"></script> -->
+                        <!-- <script>
+                            const mp = new MercadoPago("YOUR_PUBLIC_KEY", {
+                                locale: "pt-BR"
+                            } );
+                            // Adicione aqui a lógica para criar o formulário de pagamento do Mercado Pago
+                        </script> -->
+                    </form>
+                </div>
+            </div>
+            <button type="submit" class="pay-button">Pagar</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img src="../img/logobranca.png" alt="Logo Premix">
+          </div>
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="./contatenos.html">Contate-nos</a>
+            <a href="#">Termos</a>
+          </div>
+          <div class="footer-social">
+            <a href="#"><img src="../img/icon-facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+            <a href="#"><img src="../img/icon-github.png" alt="GitHub"></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+        </div>
+      </footer>      
+    <script>
+        document.addEventListener("DOMContentLoaded", function( ) {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll(".nav-tab");
+
+            navLinks.forEach(link => {
+                let linkPath = link.getAttribute("href");
+                if (linkPath.startsWith("../")) {
+                    linkPath = linkPath.substring(3); 
+                }
+                if (currentPath.includes(linkPath)) {
+                    link.classList.add("active-tab");
+                } else {
+                    link.classList.remove("active-tab");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagamento Aprovado - PremiX</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/cadastro.css">
+  <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .success-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      text-align: center;
+      background: linear-gradient(135deg, #000000 20%, #e4c00b, #e4c40b 50%);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .success-icon {
+      font-size: 80px;
+      color: #51ff01;
+      margin-bottom: 20px;
+     
+      
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn-download-success {
+      background: linear-gradient(135deg, #000000 0%, #000000 100%);
+      color: rgb(242, 211, 11);
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-download-success:hover {
+      transform: translateY(-2px);
+      color: rgb(223, 189, 0);
+    }
+
+    .btn-back-home {
+      background: #000000;
+      color: #ffe100;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #000000;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back-home:hover {
+      background: #000000;
+      color: #fefa02;
+       transform: translateY(-2px);
+    }
+
+    .status-info {
+      background: #010601;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #f0ec08;
+    }
+
+    .loading-dots {
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    .loading-dots span {
+      animation: pulse 1.5s infinite;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <img src="../img/logobranca.png" alt="logo premix">
+  </div>
+  <div class="menu-e-botao">
+    <nav class="nav">
+      <ul>
+        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+      </ul>
+    </nav>
+    <a href="download.html" class="download-button">Download</a>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>Pagamento Aprovado! 🎉</h1>
+      <p>Sua conta foi ativada com sucesso</p>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-card">
+      <div class="success-container">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <h2>Pagamento Confirmado!</h2>
+        <p>Seu pagamento foi aprovado e sua conta está sendo ativada.</p>
+
+        <div class="status-info">
+          <i class="fas fa-sync-alt fa-spin"></i>
+          <strong>Status:</strong> Ativando sua conta<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
+        </div>
+
+        <p>Sua conta ficará ativa em instantes. Agora você pode:</p>
+
+        <div class="success-actions">
+          <a href="download.html" class="btn-download-success">
+            <i class="fas fa-download"></i>
+            Baixar Software
+          </a>
+          <a href="../index.html" class="btn-back-home">
+            <i class="fas fa-home"></i>
+            Voltar ao Início
+          </a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background: #000000; border-radius: 8px;">
+          <h4 style="margin: 0 0 10px 0; color: #fdd700;">📋 Próximos Passos:</h4>
+          <ul style="text-align: left; margin: 0; padding-left: 20px;">
+            <li>Baixe e instale o software PremiX</li>
+            <li>Abra o aplicativo e faça login com seu email e senha</li>
+            <li>Comece a gerenciar seus estagiários!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="../img/logobranca.png" alt="Logo Premix">
+    </div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="contatenos.html">Contate-nos</a>
+      <a href="#">Termos</a>
+    </div>
+    <div class="footer-social">
+      <a href="#"><img src="../img/icon-facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+      <a href="#"><img src="../img/icon-github.png" alt="GitHub"></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  // Verifica se a conta foi ativada
+  setTimeout(() => {
+    // Aqui pode adicionar verificação da API se quiser
+    const statusInfo = document.querySelector('.status-info');
+    if (statusInfo) {
+      statusInfo.innerHTML = `
+        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+        <strong>Status:</strong> <span style="color: #4CAF50;">Conta ativada com sucesso! ✅</span>
+      `;
+    }
+  }, 3000);
+</script>
+</body>
+</html>

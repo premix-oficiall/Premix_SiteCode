@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagamento Pendente - PremiX</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/cadastro.css">
+  <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .pending-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      text-align: center;
+      background: rgb(0, 0, 0);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .pending-icon {
+      font-size: 80px;
+      color: #FFA000;
+      margin-bottom: 20px;
+    }
+
+    .pending-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn-check-status {
+      background: linear-gradient(135deg, #FFA000 0%, #f2bf06 100%);
+      color: rgb(0, 0, 0);
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-check-status:hover {
+      transform: translateY(-2px);
+      color: rgb(0, 0, 0);
+    }
+
+    .btn-home-pending {
+      background:linear-gradient(135deg, #FFA000 0%, #f2bf06 100%);
+      color: #000000;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+
+    .btn-home-pending:hover {
+      background:linear-gradient(135deg, #f1d608 0%, #fbad06, 100%);
+      transform: translateY(-2px);
+    }
+
+    .pending-info {
+      background: #000000e4;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #FFA000;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #FFA000;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <img src="../img/logobranca.png" alt="logo premix">
+  </div>
+  <div class="menu-e-botao">
+    <nav class="nav">
+      <ul>
+        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+      </ul>
+    </nav>
+    <a href="download.html" class="download-button">Download</a>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>Pagamento em Análise ⏳</h1>
+      <p>Seu pagamento está sendo processado</p>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-card">
+      <div class="pending-container">
+        <div class="pending-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        
+        <h2>Pagamento Pendente</h2>
+        <p>Seu pagamento está em processamento. Isso pode levar alguns minutos.</p>
+
+        <div class="spinner"></div>
+
+        <div class="pending-info">
+          <i class="fas fa-info-circle"></i>
+          <strong>Status:</strong> Aguardando confirmação do pagamento
+        </div>
+
+        <p>Enviaremos um email de confirmação quando o pagamento for aprovado. Você também pode verificar o status mais tarde.</p>
+
+        <div class="pending-actions">
+          <button class="btn-check-status" onclick="checkPaymentStatus()">
+            <i class="fas fa-sync-alt"></i>
+            Verificar Status
+          </button>
+          <a href="../index.html" class="btn-home-pending">
+            <i class="fas fa-home"></i>
+            Voltar ao Início
+          </a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background: #000000; border-radius: 8px;">
+          <h4 style="margin: 0 0 10px 0; color: #333;">📧 Acompanhamento:</h4>
+          <p style="margin: 0; text-align: left;">
+            Você receberá um email em <strong>seu@email.com</strong> quando o pagamento for confirmado.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="../img/logobranca.png" alt="Logo Premix">
+    </div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="contatenos.html">Contate-nos</a>
+      <a href="#">Termos</a>
+    </div>
+    <div class="footer-social">
+      <a href="#"><img src="../img/icon-facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+      <a href="#"><img src="../img/icon-github.png" alt="GitHub"></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  function checkPaymentStatus() {
+    const btn = document.querySelector('.btn-check-status');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+    btn.disabled = true;
+    
+    // Simula verificação do status
+    setTimeout(() => {
+      alert('O pagamento ainda está em processamento. Tente novamente em alguns minutos.');
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }, 2000);
+  }
+
+  // Verificação automática a cada 30 segundos
+  setInterval(() => {
+    console.log('Verificando status do pagamento...');
+  }, 30000);
+</script>
+</body>
+</html>

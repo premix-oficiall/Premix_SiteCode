@@ -1,0 +1,125 @@
+.payment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 120px); /* Ajusta a altura para considerar header e footer */
+    background-color: #0f0f0f; /* Cor de fundo do site */
+    padding: 40px 20px;
+}
+
+.payment-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #1a1a1a; /* Cor de fundo dos cards */
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(251, 197, 49, 0.2); /* Sombra amarela */
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    gap: 30px;
+}
+
+.billing-address, .payment-details {
+    flex: 1;
+    min-width: 300px;
+}
+
+.payment-container h2 {
+    color: #fbc531; /* Cor amarela para títulos */
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    color: #f2f2f2; /* Cor do texto padrão */
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3e3e42; /* Borda dos inputs */
+    border-radius: 4px;
+    background-color: #2d2d30; /* Fundo dos inputs */
+    color: #f2f2f2; /* Texto dos inputs */
+    font-size: 1rem;
+}
+
+.form-group input::placeholder {
+    color: #888; /* Cor do placeholder */
+}
+
+.form-group-inline {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group-inline .form-group {
+    flex: 1;
+}
+
+.form-group-triple-inline {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group-triple-inline .form-group {
+    flex: 1;
+}
+
+.accepted-cards {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.accepted-cards p {
+    color: #f2f2f2;
+    margin-right: 10px;
+}
+
+.accepted-cards img {
+    width: 40px;
+    height: auto;
+}
+
+.pay-button {
+    background-color: #fbc531; /* Cor amarela do botão */
+    border: none;
+    color: #000000; /* Texto preto do botão */
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 30px;
+}
+
+.pay-button:hover {
+    background-color: #e6b642; /* Amarelo mais escuro no hover */
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .payment-container {
+        flex-direction: column;
+    }
+
+    .form-group-inline,
+    .form-group-triple-inline {
+        flex-direction: column;
+        gap: 0;
+    }
+}

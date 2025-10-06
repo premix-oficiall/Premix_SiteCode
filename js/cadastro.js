@@ -5,7 +5,10 @@ let currentStep = 1;
 let isLoading = false;
 let emailValido = false;
 let usuarioValido = false;
-let contaExistente = null; // Armazena dados da conta existente
+let contaExistente = null;
+
+// URL base da API
+const API_BASE_URL = "https://premix-sitecode1.onrender.com";
 
 // Inicialização da página
 document.addEventListener("DOMContentLoaded", function() {
@@ -86,7 +89,7 @@ async function verificarDadosExistente(tipo, valor) {
     try {
         console.log(`🔍 Verificando ${tipo}: ${valor}`);
         
-        const response = await fetch(`http://localhost:3000/api/Gestor/verificar-${tipo}`, {
+        const response = await fetch(`${API_BASE_URL}/api/Gestor/verificar-${tipo}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ [tipo]: valor })
@@ -114,17 +117,13 @@ function setupRealTimeValidation() {
                 const resultado = await verificarDadosExistente('email', this.value);
                 
                 if (resultado.existe) {
-                    // Email existe - verifica se conta está ativa ou não
                     if (resultado.gestor && !resultado.gestor.isActive) {
-                        // Conta existe mas não está ativa - oferece continuar cadastro
                         showContaExistente(resultado.gestor);
                     } else {
-                        // Conta existe e está ativa - erro normal
                         showFieldError("email", "Este email já está cadastrado");
                         emailValido = false;
                     }
                 } else {
-                    // Email não existe - libera para cadastro
                     clearFieldError("email");
                     esconderContaExistente();
                     emailValido = true;
@@ -192,7 +191,7 @@ function showContaExistente(gestor) {
         usarContaExistente(gestor);
     });
     
-    emailValido = true; // Permite avançar mesmo com conta existente
+    emailValido = true;
     atualizarBotaoProximo();
 }
 
@@ -207,13 +206,11 @@ function esconderContaExistente() {
 function usarContaExistente(gestor) {
     console.log("🎯 Usando conta existente:", gestor);
     
-    // Preenche os campos automaticamente
     document.getElementById("nome_chefe").value = gestor.usuario;
     document.getElementById("email").value = gestor.email;
     document.getElementById("nome_chefe").disabled = true;
     document.getElementById("email").disabled = true;
     
-    // Mostra mensagem de confirmação
     const mensagemDiv = document.querySelector(".conta-existente");
     if (mensagemDiv) {
         mensagemDiv.innerHTML = `
@@ -229,7 +226,6 @@ function usarContaExistente(gestor) {
         `;
     }
     
-    // Avança automaticamente para a etapa de pagamento
     setTimeout(() => {
         nextStep(1);
     }, 1000);
@@ -238,7 +234,6 @@ function usarContaExistente(gestor) {
 function atualizarBotaoProximo() {
     const btnNext = document.querySelector(".btn-next");
     if (btnNext) {
-        // Permite avançar se email é válido OU se tem conta existente
         btnNext.disabled = !(emailValido && usuarioValido);
     }
 }
@@ -347,7 +342,7 @@ function markStepCompleted(step) {
 }
 
 // ================================
-// Validação - CORRIGIDA
+// Validação
 // ================================
 function validateCurrentStep(step) {
     console.log(`🔍 Validando etapa ${step}...`);
@@ -368,7 +363,6 @@ function validateCurrentStep(step) {
         } else {
             clearFieldError(input.id);
             
-            // Só valida se o campo existe e tem valor
             if (input.type === "email" && !isValidEmail(input.value)) {
                 isValid = false;
                 showFieldError(input.id, "Email inválido");
@@ -604,7 +598,6 @@ function collectFormData() {
         return null;
     }
     
-    // Remove formatação do CPF
     const cpfRaw = cpf.value.replace(/\D/g, '');
     
     const formData = {
@@ -626,7 +619,7 @@ async function registerGestor(data) {
     console.log("📤 Enviando para API:", data);
     
     try {
-        const response = await fetch("http://localhost:3000/api/Gestor/register", {
+        const response = await fetch(`${API_BASE_URL}/api/Gestor/register`, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json" 
@@ -657,7 +650,7 @@ async function criarPagamentoExistente(gestorId, plano) {
     console.log("💰 Criando pagamento para conta existente...");
     
     try {
-        const response = await fetch("http://localhost:3000/api/payments/create-existing", {
+        const response = await fetch(`${API_BASE_URL}/api/payments/create-existing`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -681,7 +674,7 @@ async function criarPagamentoExistente(gestorId, plano) {
 }
 
 // ================================
-// Submissão Final - CORRIGIDA COM FLUXO INTELIGENTE
+// Submissão Final - CORRIGIDA
 // ================================
 async function handleFinalSubmission(e) {
     e.preventDefault();
@@ -708,7 +701,7 @@ async function handleFinalSubmission(e) {
         let paymentData;
 
         if (contaExistente) {
-            // 👇 FLUXO CONTA EXISTENTE - Só cria pagamento
+            // FLUXO CONTA EXISTENTE
             console.log("🔄 Usando conta existente para pagamento...");
             gestorId = contaExistente._id;
             
@@ -716,7 +709,7 @@ async function handleFinalSubmission(e) {
             console.log("✅ Pagamento para conta existente criado:", paymentData);
             
         } else {
-            // 👇 FLUXO NORMAL - Cadastra novo + pagamento
+            // FLUXO NORMAL - NOVA CONTA
             console.log("🔄 Criando nova conta + pagamento...");
             const formData = collectFormData();
             if (!formData) {
@@ -734,8 +727,8 @@ async function handleFinalSubmission(e) {
             gestorId = gestorResult.gestor?._id;
             if (!gestorId) throw new Error("ID do gestor não retornado");
 
-            // Cria pagamento para nova conta
-            const paymentResponse = await fetch("http://localhost:3000/api/payments/create-preference", {
+            // CORREÇÃO CRÍTICA: paymentResponse estava indefinido
+            const paymentResponse = await fetch(`${API_BASE_URL}/api/payments/create-preference`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -753,11 +746,14 @@ async function handleFinalSubmission(e) {
             console.log("✅ Pagamento para nova conta criado:", paymentData);
         }
 
-        // 3. REDIRECIONA PARA O MERCADO PAGO
+        // REDIRECIONA PARA MERCADO PAGO
         console.log("➡️ Redirecionando para Mercado Pago...");
         
-        // Usa sandbox para testes
         const checkoutUrl = paymentData.sandbox_init_point || paymentData.init_point;
+        if (!checkoutUrl) {
+            throw new Error("URL de checkout não encontrada");
+        }
+        
         window.location.href = checkoutUrl;
 
     } catch (error) {
@@ -765,7 +761,6 @@ async function handleFinalSubmission(e) {
         showRegistrationError(error.message);
         setLoadingState(false);
     }
-    // NÃO chama setLoadingState(false) aqui porque a página vai redirecionar
 }
 
 // ================================
@@ -793,7 +788,7 @@ function setLoadingState(loading) {
 }
 
 // ================================
-// Erro de Registro - MELHORADO
+// Erro de Registro
 // ================================
 function showRegistrationError(message) {
     console.error("🚨 Mostrando erro para usuário:", message);
@@ -811,7 +806,6 @@ function showRegistrationError(message) {
         }
     }
     
-    // Estilização diferente para diferentes tipos de erro
     if (message.includes("email") || message.includes("usuário") || message.includes("CPF")) {
         errorDiv.style.background = "#fff3cd";
         errorDiv.style.color = "#856404";
@@ -851,7 +845,7 @@ console.log("🧪 Para testar a API, execute no console: testarAPI()");
 
 function testarAPI() {
     console.log("🧪 Testando API diretamente...");
-    fetch("http://localhost:3000/api/Gestor/register", {
+    fetch(`${API_BASE_URL}/api/Gestor/register`,{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

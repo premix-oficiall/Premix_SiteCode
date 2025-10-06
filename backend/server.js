@@ -8,7 +8,17 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors());
+// CORRIJA o CORS no server.js - URLS CORRETAS
+app.use(cors({
+  origin: [
+    "https://premix-frontend.onrender.com",  // SEU FRONTEND
+    "https://premix-sitecode1.onrender.com", // SEU BACKEND (para testes)
+    "http://localhost:5500",                 // DEV FRONTEND
+    "http://127.0.0.1:5500",                // DEV ALTERNATIVO
+    "http://localhost:3000"                 // DEV BACKEND
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;

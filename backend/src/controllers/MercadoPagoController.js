@@ -26,13 +26,13 @@ exports.criarPreferenciaPagamento = async (req, res) => {
           currency_id: 'BRL'
         }
       ],
-        back_urls: {
-          success: 'https://premix-frontend.onrender.com/success.html',  // SEU FRONTEND REAL
-          failure: 'https://premix-frontend.onrender.com/error.html',
-          pending: 'https://premix-frontend.onrender.com/pending.html'
-        },
+      back_urls: {
+        success: 'https://premix-frontend.onrender.com/success.html',
+        failure: 'https://premix-frontend.onrender.com/error.html',
+        pending: 'https://premix-frontend.onrender.com/pending.html'
+      },
+      auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
       external_reference: gestorId.toString(),
-      // Linha ~30 - notification_url
       notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
     };
 
@@ -93,13 +93,14 @@ exports.criarPagamentoExistente = async (req, res) => {
           currency_id: 'BRL'
         }
       ],
-        back_urls: {
-          success: 'https://premix-frontend.onrender.com/success.html',  // SEU FRONTEND REAL
-          failure: 'https://premix-frontend.onrender.com/error.html',
-          pending: 'https://premix-frontend.onrender.com/pending.html'
-        },
+      back_urls: {
+        success: 'https://premix-frontend.onrender.com/success.html',
+        failure: 'https://premix-frontend.onrender.com/error.html',
+        pending: 'https://premix-frontend.onrender.com/pending.html'
+      },
+      auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
       external_reference: gestorId.toString(),
-       notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
+      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
     };
 
     console.log('📦 Enviando pagamento existente para MP:', requestBody);
@@ -133,5 +134,3 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-

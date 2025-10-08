@@ -26,11 +26,11 @@ exports.criarPreferenciaPagamento = async (req, res) => {
           currency_id: 'BRL'
         }
       ],
-      back_urls: {
-        success: 'http://localhost:5500/success.html',
-        failure: 'http://localhost:5500/error.html',
-        pending: 'http://localhost:5500/pending.html'
-      },
+        back_urls: {
+          success: 'https://premix-frontend.onrender.com/success.html',  // SEU FRONTEND REAL
+          failure: 'https://premix-frontend.onrender.com/error.html',
+          pending: 'https://premix-frontend.onrender.com/pending.html'
+        },
       external_reference: gestorId.toString(),
       // Linha ~30 - notification_url
       notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
@@ -133,4 +133,5 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 

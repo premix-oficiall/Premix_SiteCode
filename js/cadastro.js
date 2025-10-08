@@ -749,7 +749,7 @@ async function handleFinalSubmission(e) {
         // REDIRECIONA PARA MERCADO PAGO
         console.log("➡️ Redirecionando para Mercado Pago...");
         
-        const checkoutUrl = paymentData.sandbox_init_point || paymentData.init_point;
+        const checkoutUrl = paymentData.sandbox_init_point; // ⬅️ USA APENAS SANDBOX
         if (!checkoutUrl) {
             throw new Error("URL de checkout não encontrada");
         }

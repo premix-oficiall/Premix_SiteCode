@@ -1,215 +1,310 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pagamento Pendente - PremiX</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/cadastro.css">
-  <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    .pending-container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 40px;
-      text-align: center;
-      background: rgb(0, 0, 0);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .pending-icon {
-      font-size: 80px;
-      color: #FFA000;
-      margin-bottom: 20px;
-    }
-
-    .pending-actions {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-
-    .btn-check-status {
-      background: linear-gradient(135deg, #FFA000 0%, #f2bf06 100%);
-      color: rgb(0, 0, 0);
-      padding: 15px 30px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform 0.3s ease;
-    }
-
-    .btn-check-status:hover {
-      transform: translateY(-2px);
-      color: rgb(0, 0, 0);
-    }
-
-    .btn-home-pending {
-      background:linear-gradient(135deg, #FFA000 0%, #f2bf06 100%);
-      color: #000000;
-      padding: 15px 30px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 2px solid #e9ecef;
-      transition: all 0.3s ease;
-    }
-
-    .btn-home-pending:hover {
-      background:linear-gradient(135deg, #f1d608 0%, #fbad06, 100%);
-      transform: translateY(-2px);
-    }
-
-    .pending-info {
-      background: #000000e4;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 20px 0;
-      border-left: 4px solid #FFA000;
-    }
-
-    .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #FFA000;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 2s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download - PremiX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/download.css">
+    <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <img src="../img/logobranca.png" alt="logo premix">
-  </div>
-  <div class="menu-e-botao">
-    <nav class="nav">
-      <ul>
-        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
-        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
-        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
-      </ul>
-    </nav>
-    <a href="download.html" class="download-button">Download</a>
-  </div>
-</header>
-
-<main class="main-content">
-  <div class="hero-section">
-    <div class="hero-background">
-      <div class="floating-elements">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-      </div>
-    </div>
-    <div class="hero-content">
-      <h1>Pagamento em Análise ⏳</h1>
-      <p>Seu pagamento está sendo processado</p>
-    </div>
-  </div>
-
-  <div class="form-container">
-    <div class="form-card">
-      <div class="pending-container">
-        <div class="pending-icon">
-          <i class="fas fa-clock"></i>
+    <header class="header">
+        <div class="logo">
+        <a href="../index.html"><img src="../img/logobranca.png" alt="logo premix"></a>
         </div>
+        <div class="menu-e-botao">
+            <nav class="nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+                    <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+                    <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
+                    <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+                </ul>
+            </nav>
+            <a href="download.html" class="download-button active">Download</a>
+        </div>
+    </header>
+
+    <main class="download-main">
+        <!-- Hero Section -->
+        <section class="download-hero">
+            <div class="hero-content">
+                <h1>Baixe a PremiX e transforme sua gestão</h1>
+                <p>A solução completa para gerenciar estagiários e aumentar a produtividade da sua equipe</p>
+                <div class="download-buttons">
+                    <a href="#" class="btn-download primary" id="download-windows">
+                        <i class="fab fa-windows"></i>
+                        Download para Windows
+                    </a>
+                </div>
+                
+                <div class="system-requirements">
+                    <small>Requisitos: Windows 10</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Como Funciona -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2>Como a PremiX funciona</h2>
+                <p class="section-subtitle">Descubra como nossa plataforma revoluciona a gestão de estagiários</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>1. Cadastro Simples</h3>
+                        <p>Registre-se rapidamente e configure sua conta em poucos minutos. Sem complicações, apenas o essencial.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>2. Defina Metas</h3>
+                        <p>Crie metas claras e objetivos específicos para cada estagiário. Acompanhe o progresso em tempo real.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>3. Monitore Resultados</h3>
+                        <p>Visualize métricas detalhadas, relatórios de desempenho e insights para tomar decisões estratégicas.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>4. Sistema de Recompensas</h3>
+                        <p>Motive sua equipe com um sistema de pontuação e recompensas que aumenta o engajamento.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>5. Colaboração Eficiente</h3>
+                        <p>Facilite a comunicação entre gestores e estagiários com ferramentas integradas de colaboração.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>6. Resultados Rápidos</h3>
+                        <p>Veja melhorias na produtividade e engajamento da equipe já nas primeiras semanas de uso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefícios -->
+        <section class="benefits">
+            <div class="container">
+                <div class="benefits-content">
+                    <div class="benefits-text">
+                        <h2>Por que escolher a PremiX?</h2>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Interface Intuitiva</h4>
+                                    <p>Design moderno e fácil, sem curva de aprendizado complexa</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Relatórios Detalhados</h4>
+                                    <p>Análises completas do desempenho individual e da equipe</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Suporte Completo</h4>
+                                    <p>Equipe de suporte dedicada para ajudar em todas as etapas</p>
+                                </div>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Segurança Garantida</h4>
+                                    <p>Seus dados protegidos com criptografia de ponta a ponta</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="benefits-image">
+                        <div class="dashboard-preview">
+                            <div class="preview-header">
+                                <div class="preview-controls">
+                                    <span class="control"></span>
+                                    <span class="control"></span>
+                                    <span class="control"></span>
+                                </div>
+                                <span class="preview-title">PremiX Dashboard</span>
+                            </div>
+                            <div class="preview-content">
+                                <div class="preview-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-number">85%</div>
+                                        <div class="stat-label">Produtividade</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">12</div>
+                                        <div class="stat-label">Estagiários</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">94%</div>
+                                        <div class="stat-label">Satisfação</div>
+                                    </div>
+                                </div>
+                                <div class="preview-chart">
+                                    <div class="chart-bars">
+                                        <div class="bar" style="height: 60%"></div>
+                                        <div class="bar" style="height: 80%"></div>
+                                        <div class="bar" style="height: 45%"></div>
+                                        <div class="bar" style="height: 90%"></div>
+                                        <div class="bar" style="height: 70%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Pronto para começar?</h2>
+                    <p>Junte-se a centenas de empresas que já transformaram sua gestão com a PremiX</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn-cta primary" id="cta-download">
+                            <i class="fas fa-download"></i>
+                            Baixar Agora
+                        </a>
+                        <a href="cadastro.html" class="btn-cta secondary">
+                            <i class="fas fa-user-plus"></i>
+                            Criar Conta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../img/logobranca.png" alt="Logo Premix">
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="contatenos.html">Contate-nos</a>
+                <a href="#">Termos</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/premix.oficial/"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+                <a href="https://www.linkedin.com/company/premix-oficial/?viewAsMember=true"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+                <a href="https://github.com/premix-oficiall"><img src="../img/icon-github.png" alt="GitHub"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Navegação ativa (mantive sua lógica)
+          const currentPath = window.location.pathname;
+          const navLinks = document.querySelectorAll(".nav-tab");
         
-        <h2>Pagamento Pendente</h2>
-        <p>Seu pagamento está em processamento. Isso pode levar alguns minutos.</p>
-
-        <div class="spinner"></div>
-
-        <div class="pending-info">
-          <i class="fas fa-info-circle"></i>
-          <strong>Status:</strong> Aguardando confirmação do pagamento
-        </div>
-
-        <p>Enviaremos um email de confirmação quando o pagamento for aprovado. Você também pode verificar o status mais tarde.</p>
-
-        <div class="pending-actions">
-          <button class="btn-check-status" onclick="checkPaymentStatus()">
-            <i class="fas fa-sync-alt"></i>
-            Verificar Status
-          </button>
-          <a href="../index.html" class="btn-home-pending">
-            <i class="fas fa-home"></i>
-            Voltar ao Início
-          </a>
-        </div>
-
-        <div style="margin-top: 30px; padding: 15px; background: #000000; border-radius: 8px;">
-          <h4 style="margin: 0 0 10px 0; color: #333;">📧 Acompanhamento:</h4>
-          <p style="margin: 0; text-align: left;">
-            Você receberá um email em <strong>seu@email.com</strong> quando o pagamento for confirmado.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-logo">
-      <img src="../img/logobranca.png" alt="Logo Premix">
-    </div>
-    <div class="footer-links">
-      <a href="../index.html">Home</a>
-      <a href="contatenos.html">Contate-nos</a>
-      <a href="#">Termos</a>
-    </div>
-    <div class="footer-social">
-      <a href="#"><img src="../img/icon-facebook.png" alt="Facebook"></a>
-      <a href="#"><img src="../img/icon-instagram.png" alt="Instagram"></a>
-      <a href="#"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
-      <a href="#"><img src="../img/icon-github.png" alt="GitHub"></a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
-  </div>
-</footer>
-
-<script>
-  function checkPaymentStatus() {
-    const btn = document.querySelector('.btn-check-status');
-    const originalText = btn.innerHTML;
-    
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
-    btn.disabled = true;
-    
-    // Simula verificação do status
-    setTimeout(() => {
-      alert('O pagamento ainda está em processamento. Tente novamente em alguns minutos.');
-      btn.innerHTML = originalText;
-      btn.disabled = false;
-    }, 2000);
-  }
-
-  // Verificação automática a cada 30 segundos
-  setInterval(() => {
-    console.log('Verificando status do pagamento...');
-  }, 30000);
-</script>
+          navLinks.forEach(link => {
+            let linkPath = link.getAttribute("href");
+            if (linkPath && linkPath.startsWith("../")) {
+              linkPath = linkPath.substring(3);
+            }
+            if (linkPath && currentPath.includes(linkPath)) {
+              link.classList.add("active-tab");
+            } else {
+              link.classList.remove("active-tab");
+            }
+          });
+        
+          // Botões de download (pega elementos - podem ser null se removidos)
+          const downloadWindows = document.getElementById("download-windows");
+          const downloadMac = document.getElementById("download-mac"); // pode ser null
+          const ctaDownload = document.getElementById("cta-download");
+        
+          // Detectar sistema operacional (mais robusto)
+          const userAgent = navigator.userAgent || "";
+          const isMac = /Mac/i.test(userAgent);
+          const isWindows = /Windows/i.test(userAgent);
+        
+          // Destacar botão baseado no SO — só se o botão existir
+          if (isMac && downloadMac) {
+            downloadMac.classList.add("recommended");
+            downloadMac.innerHTML = '<i class="fab fa-apple"></i> Download para Mac (Recomendado)';
+          } else if (isWindows && downloadWindows) {
+            downloadWindows.classList.add("recommended");
+            downloadWindows.innerHTML = '<i class="fab fa-windows"></i> Download para Windows (Recomendado)';
+          }
+        
+          // Eventos de download — só adiciona se o elemento existir
+          if (downloadWindows) {
+            downloadWindows.addEventListener("click", function(e) {
+              e.preventDefault();
+              alert("Download para Windows iniciado!");
+              // window.location.href = "https://releases.premix.com/windows/premix-setup.exe";
+            });
+          }
+        
+          if (downloadMac) {
+            downloadMac.addEventListener("click", function(e) {
+              e.preventDefault();
+              alert("Download para Mac iniciado!");
+              // window.location.href = "https://releases.premix.com/mac/premix.dmg";
+            });
+          }
+        
+          if (ctaDownload) {
+            ctaDownload.addEventListener("click", function(e) {
+              e.preventDefault();
+              const hero = document.querySelector(".download-hero");
+              if (hero) hero.scrollIntoView({ behavior: "smooth" });
+            });
+          }
+        
+          // Animação dos cards ao scroll (mantive seu observer)
+          const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+          };
+        
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("animate-in");
+              }
+            });
+          }, observerOptions);
+        
+          document.querySelectorAll(".feature-card").forEach(card => observer.observe(card));
+          document.querySelectorAll(".benefit-item").forEach(item => observer.observe(item));
+        });
+        </script>
+        
 </body>
 </html>

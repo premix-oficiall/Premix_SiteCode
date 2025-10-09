@@ -162,6 +162,19 @@ main {
   opacity: 0.9;
 }
 
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--text-white);
+}
+
+.highlight {
+    color: #fbca48;
+    position: relative;
+}
+
 /*Estilo do botão*/
 .botao{
   display: inline-block;

@@ -27,9 +27,9 @@ exports.criarPreferenciaPagamento = async (req, res) => {
         }
       ],
       back_urls: {
-        success: 'https://premix-frontend.onrender.com/success.html',
-        failure: 'https://premix-frontend.onrender.com/error.html',
-        pending: 'https://premix-frontend.onrender.com/pending.html'
+        success: 'https://premix-frontend.onrender.com/pages/success.html',
+        failure: 'https://premix-frontend.onrender.com/pages/error.html',
+        pending: 'https://premix-frontend.onrender.com/pages/pending.html'
       },
       auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
       external_reference: gestorId.toString(),
@@ -94,9 +94,9 @@ exports.criarPagamentoExistente = async (req, res) => {
         }
       ],
       back_urls: {
-        success: 'https://premix-frontend.onrender.com/success.html',
-        failure: 'https://premix-frontend.onrender.com/error.html',
-        pending: 'https://premix-frontend.onrender.com/pending.html'
+        success: 'https://premix-frontend.onrender.com/pages/success.html',
+        failure: 'https://premix-frontend.onrender.com/pages/error.html',
+        pending: 'https://premix-frontend.onrender.com/pages/pending.html'
       },
       auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
       external_reference: gestorId.toString(),
@@ -134,3 +134,4 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

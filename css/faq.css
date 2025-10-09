@@ -123,16 +123,25 @@ body {
 
 .faq-answer p {
   margin: 0;
-  padding: 20px 0;
+  padding: 30px 0 30px 0; 
   font-size: 1rem;
   color: #ddd;
   line-height: 1.6;
 }
 
+
 /* Quando ativo */
 .faq-question.active {
   color: #fbca48;
   background-color: #1f1f1f;
+}
+
+.highlight {
+  background-color: #fbca48;
+  color: #000;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 0 2px;
 }
 
 /* Responsividade */
@@ -155,3 +164,4 @@ body {
     padding: 12px 15px;
   }
 }
+

@@ -22,7 +22,7 @@ body {
 /* Hero Section */
 .hero-section {
   position: relative;
-  padding: 60px 20px 40px;
+  padding: 20px 20px 10px;
   text-align: center;
   overflow: hidden;
 }
@@ -87,6 +87,10 @@ body {
   z-index: 2;
   max-width: 600px;
   margin: 0 auto;
+  display: flex; 
+  align-items: baseline; 
+  justify-content: center; 
+  flex-wrap: wrap; 
 }
 
 .hero-content h1 {
@@ -96,7 +100,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   animation: slideInFromTop 0.8s ease-out;
 }
 
@@ -287,11 +291,12 @@ body {
 .form-header {
   background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
   color: #000;
-  padding: 40px;
+  /* Diminuído o padding vertical (topo e base) para 25px, mantendo 40px nas laterais */
+  padding: 25px 40px; 
   text-align: center;
   position: relative;
   overflow: hidden;
-}
+  }
 
 .form-header::before {
   content: '';
@@ -317,7 +322,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
   font-size: 32px;
   position: relative;
   z-index: 2;
@@ -325,7 +330,7 @@ body {
 
 .form-header h2 {
   font-size: 2.2rem;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-weight: 700;
   position: relative;
   z-index: 2;
@@ -341,12 +346,16 @@ body {
 /* Step Content */
 .step-content {
   display: none;
-  padding: 50px 40px;
+  padding: 60px 40px 50px;
 }
 
 .step-content.active {
   display: block;
   animation: fadeInUp 0.6s ease-out;
+}
+
+.step-content.active .form-row:first-child {
+  margin-top: 45px; 
 }
 
 @keyframes fadeInUp {

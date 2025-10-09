@@ -9,26 +9,46 @@
   <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
+  <style>
+    /* Destaque amarelo para a palavra pesquisada */
+    .highlight {
+      background-color: #fbca48;
+      color: #000;
+      font-weight: 600;
+      border-radius: 3px;
+      padding: 0 2px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Ajuste extra de espaçamento */
+    .faq-answer p {
+      margin: 0;
+      padding: 20px 0 35px 0; /* aumenta o espaçamento inferior */
+      font-size: 1rem;
+      color: #ddd;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
 
   <!-- HEADER -->
   <header class="header">
-  <div class="logo">
-    <img src="../img/logobranca.png" alt="logo premix">
-  </div>
-  <div class="menu-e-botao">
-    <nav class="nav">
-      <ul>
-        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
-        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
-        <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
-        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
-      </ul>
-    </nav>
-    <a href="download.html" class="download-button">Download</a>
-  </div>
-</header>
+    <div class="logo">
+      <a href="../index.html"><img src="../img/logobranca.png" alt="logo premix"></a>
+    </div>
+    <div class="menu-e-botao">
+      <nav class="nav">
+        <ul>
+          <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+          <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+          <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
+          <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+        </ul>
+      </nav>
+      <a href="download.html" class="download-button">Download</a>
+    </div>
+  </header>
 
   <!-- CONTEÚDO -->
   <main class="faq-container">
@@ -42,94 +62,117 @@
     </div>
 
     <div class="faq-list" id="faqList">
+
       <div class="faq-item">
         <button class="faq-question">Como posso criar minha conta?</button>
         <div class="faq-answer">
-          <p>Para criar sua conta, clique em "Cadastro" no menu e preencha os campos obrigatórios. Em seguida, confirme seu e-mail para ativar a conta.</p>
+          <p>Para criar sua conta, clique em "Cadastro" no menu e preencha os campos obrigatórios.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">O serviço é gratuito?</button>
+        <button class="faq-question">O que é a PremiX?</button>
         <div class="faq-answer">
-          <p>Oferecemos um plano gratuito com recursos limitados e planos pagos com funcionalidades avançadas para empresas que precisam de mais recursos.</p>
+          <p>Uma plataforma digital para gestão da produtividade e engajamento de estagiários.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Posso usar em dispositivos móveis?</button>
+        <button class="faq-question">Como a PremiX funciona?</button>
         <div class="faq-answer">
-          <p>Sim! Nosso sistema é totalmente responsivo e pode ser acessado via smartphones e tablets com a mesma funcionalidade da versão desktop.</p>
+          <p>Ela organiza tarefas, monitora desempenho e oferece recompensas personalizadas.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Como entro em contato com o suporte?</button>
+        <button class="faq-question">Quem pode usar a plataforma?</button>
         <div class="faq-answer">
-          <p>Você pode acessar a página "Contate-nos" e preencher o formulário. Nossa equipe responderá em até 24 horas úteis.</p>
+          <p>Empresas, gestores e estagiários que necessitam de uma boa ferramenta de análise.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Como funciona o sistema de recompensas?</button>
+        <button class="faq-question">A PremiX é voltada apenas para estagiários?</button>
         <div class="faq-answer">
-          <p>O sistema de recompensas permite que gestores definam metas e prêmios para estagiários. Quando as metas são atingidas, as recompensas são liberadas automaticamente.</p>
+          <p>O foco principal é o estágio, mas também pode ser usada para funcionários e jovens talentos.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Posso integrar com outras ferramentas?</button>
+        <button class="faq-question">Quais são os principais recursos da PremiX?</button>
         <div class="faq-answer">
-          <p>Sim, oferecemos integrações com principais ferramentas de produtividade como Slack, Trello, Google Workspace e Microsoft Teams.</p>
+          <p>Dashboard de desempenho, sistema de recompensas, gestão documental e classificação de estagiários.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Como acompanho o desempenho da equipe?</button>
+        <button class="faq-question">Como o sistema de recompensas funciona?</button>
         <div class="faq-answer">
-          <p>Através do dashboard analítico, você pode visualizar métricas em tempo real, relatórios de produtividade e gráficos de desempenho individual e da equipe.</p>
+          <p>Os gestores definem metas e os estagiários recebem pontos ou benefícios conforme o desempenho.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Existe limite de usuários?</button>
+        <button class="faq-question">A PremiX ajuda a reduzir a rotatividade?</button>
         <div class="faq-answer">
-          <p>O plano gratuito permite até 5 usuários. Nos planos pagos, você pode adicionar usuários ilimitados conforme a necessidade da sua empresa.</p>
+          <p>Sim. O engajamento e o reconhecimento constantes reduzem a desmotivação e o turnover.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Como funciona o trabalho remoto/híbrido?</button>
+        <button class="faq-question">Os dados dos usuários são seguros?</button>
         <div class="faq-answer">
-          <p>Nossa plataforma foi desenvolvida especificamente para equipes remotas e híbridas, permitindo acompanhamento de tarefas, comunicação e produtividade independente da localização.</p>
+          <p>Totalmente. A plataforma utiliza autenticação e armazenamento em nuvem com proteção de dados.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Posso personalizar as metas e tarefas?</button>
+        <button class="faq-question">A empresa pode personalizar metas?</button>
         <div class="faq-answer">
-          <p>Sim! Você pode criar metas personalizadas, definir prazos, prioridades e categorias de tarefas de acordo com as necessidades específicas do seu projeto.</p>
+          <p>Sim. Cada gestor pode ajustar as métricas conforme suas necessidades.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Os dados estão seguros?</button>
+        <button class="faq-question">Quais são os planos disponíveis?</button>
         <div class="faq-answer">
-          <p>Utilizamos criptografia de ponta a ponta e seguimos as melhores práticas de segurança. Todos os dados são armazenados em servidores seguros com backup automático.</p>
+          <p>Plano Unitário (1 vaga), Pacote Premium (15 vagas) e Pacote Enterprise (50 vagas).</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-question">Como cancelo minha assinatura?</button>
+        <button class="faq-question">Como contratar a PremiX?</button>
         <div class="faq-answer">
-          <p>Você pode cancelar sua assinatura a qualquer momento através das configurações da conta. O acesso permanece ativo até o final do período pago.</p>
+          <p>Basta acessar nosso site, escolher o plano e criar uma conta para iniciar o uso.</p>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="../img/logobranca.png" alt="Logo Premix">
+    </div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="contatenos.html">Contate-nos</a>
+      <a href="#">Termos</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/premix.oficial/"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+      <a href="https://www.linkedin.com/company/premix-oficial/?viewAsMember=true"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+      <a href="https://github.com/premix-oficiall"><img src="../img/icon-github.png" alt="GitHub"></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
   <script>
-    // Script para abrir/fechar respostas
+    // Abre/fecha respostas com folga extra
     const questions = document.querySelectorAll(".faq-question");
     questions.forEach(q => {
       q.addEventListener("click", () => {
@@ -138,124 +181,63 @@
         if (answer.style.maxHeight) {
           answer.style.maxHeight = null;
         } else {
-          answer.style.maxHeight = answer.scrollHeight + "px";
+          // adiciona 30px de buffer pra não cortar o texto
+          answer.style.maxHeight = answer.scrollHeight + 30 + "px";
         }
       });
     });
 
-    // Script para funcionalidade de pesquisa
+    // Função para escapar caracteres especiais da regex
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Pesquisa com destaque preservando <p>
     const searchInput = document.getElementById('searchInput');
     const faqItems = document.querySelectorAll('.faq-item');
 
     searchInput.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase();
-      
+      const searchTermRaw = this.value.trim();
+      const searchTerm = searchTermRaw.toLowerCase();
+
       faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question').textContent.toLowerCase();
-        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-        
-        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+        const questionEl = item.querySelector('.faq-question');
+        const answerWrapper = item.querySelector('.faq-answer');
+        const answerP = item.querySelector('.faq-answer p');
+
+        const originalQuestionText = questionEl.textContent;
+        const originalAnswerText = answerP ? answerP.textContent : '';
+
+        // Remove destaques anteriores
+        questionEl.innerHTML = originalQuestionText;
+        if (answerP) answerP.innerHTML = originalAnswerText;
+
+        const qLower = originalQuestionText.toLowerCase();
+        const aLower = originalAnswerText.toLowerCase();
+
+        if (searchTerm !== '' && (qLower.includes(searchTerm) || aLower.includes(searchTerm))) {
           item.style.display = 'block';
+
+          const regex = new RegExp(`(${escapeRegExp(searchTermRaw)})`, 'gi');
+          questionEl.innerHTML = originalQuestionText.replace(regex, `<span class="highlight">$1</span>`);
+          if (answerP) answerP.innerHTML = originalAnswerText.replace(regex, `<span class="highlight">$1</span>`);
+        } else if (searchTerm === '') {
+          item.style.display = 'block';
+          questionEl.innerHTML = originalQuestionText;
+          if (answerP) answerP.innerHTML = originalAnswerText;
         } else {
           item.style.display = 'none';
         }
-      });
 
-      // Se não há termo de pesquisa, mostra todos os itens
-      if (searchTerm === '') {
-        faqItems.forEach(item => {
-          item.style.display = 'block';
-        });
-      }
+        // Atualiza a altura se a resposta estiver aberta
+        if (answerWrapper.style.maxHeight && answerWrapper.style.maxHeight !== 'null') {
+          setTimeout(() => {
+            answerWrapper.style.maxHeight = answerWrapper.scrollHeight + 30 + "px";
+          }, 20);
+        }
+      });
     });
   </script>
-<script>
-(async function() {
-  const container = document.getElementById('header');
-  if (!container) return;
-
-  const isInPages = window.location.pathname.includes('/pages/');
-  const headerUrl = isInPages ? '../header.html' : 'header.html';
-
-  try {
-    const res = await fetch(headerUrl);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const html = await res.text();
-    container.innerHTML = html;
-
-    // Se estivermos em /pages/, prefixa '../' em URLs relativas dentro do header
-    if (isInPages) {
-      const toFix = [
-        { sel: 'img', attr: 'src' },
-        { sel: 'a', attr: 'href' },
-        { sel: 'link', attr: 'href' },
-        { sel: 'script', attr: 'src' }
-      ];
-      toFix.forEach(({sel, attr}) => {
-        container.querySelectorAll(sel).forEach(el => {
-          const val = el.getAttribute(attr);
-          if (!val) return;
-          if (val.startsWith('http') || val.startsWith('/') || val.startsWith('../') || val.startsWith('data:')) return;
-          el.setAttribute(attr, '../' + val);
-        });
-      });
-    }
-  } catch (err) {
-    console.error('Não foi possível carregar header:', err);
-
-    // Fallback simples (funciona quando abre com file://)
-    if (isInPages) {
-      container.innerHTML = `
-        <header class="header">
-          <div class="logo"><img src="../img/logobranca.png" alt="logo premix"></div>
-          <div class="menu-e-botao">
-            <nav class="nav"><ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="cadastro.html">Cadastro</a></li>
-            </ul></nav>
-            <a href="download.html" class="download-button">Download</a>
-          </div>
-        </header>
-      `;
-    } else {
-      container.innerHTML = `
-        <header class="header">
-          <div class="logo"><img src="img/logobranca.png" alt="logo premix"></div>
-          <div class="menu-e-botao">
-            <nav class="nav"><ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="pages/faq.html">FAQ</a></li>
-              <li><a href="pages/cadastro.html">Cadastro</a></li>
-            </ul></nav>
-            <a href="pages/download.html" class="download-button">Download</a>
-          </div>
-        </header>
-      `;
-    }
-  }
-})();
-</script>
 
 </body>
 </html>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll(".nav-tab");
-
-        navLinks.forEach(link => {
-            let linkPath = link.getAttribute("href");
-            if (linkPath.startsWith("../")) {
-                linkPath = linkPath.substring(3); // Remove '../' for comparison
-            }
-            if (currentPath.includes(linkPath)) {
-                link.classList.add("active-tab");
-            } else {
-                link.classList.remove("active-tab");
-            }
-        });
-    });
-</script>
-

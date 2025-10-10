@@ -8,27 +8,26 @@
   <link rel="stylesheet" href="../css/contato.css">
   <link rel="icon" href="../img/Logo-Reduzida-Branca.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
   <!-- HEADER -->
   <header class="header">
-  <div class="logo">
-        <a href="../index.html"><img src="../img/logobranca.png" alt="logo premix"></a>
-  </div>
-  <div class="menu-e-botao">
-    <nav class="nav">
-      <ul>
-        <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
-        <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
-        <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
-        <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
-      </ul>
-    </nav>
-    <a href="download.html" class="download-button">Download</a>
-  </div>
-</header>
+    <div class="logo">
+      <a href="../index.html"><img src="../img/logobranca.png" alt="logo premix"></a>
+    </div>
+    <div class="menu-e-botao">
+      <nav class="nav">
+        <ul>
+          <li><a href="../index.html" class="nav-tab home-tab">Home</a></li>
+          <li><a href="faq.html" class="nav-tab faq-tab">FAQ</a></li>
+          <li><a href="cadastro.html" class="nav-tab cadastro-tab">Cadastro</a></li>
+          <li><a href="contatenos.html" class="nav-tab contato-tab">Contate-nos</a></li>
+        </ul>
+      </nav>
+      <a href="download.html" class="download-button">Download</a>
+    </div>
+  </header>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="contact-container">
@@ -95,38 +94,41 @@
       </div>
     </div>
   </main>
+
   <footer class="footer">
     <div class="footer-content">
-        <div class="footer-logo">
-            <img src="../img/logobranca.png" alt="Logo Premix">
-        </div>
-        <div class="footer-links">
-            <a href="../index.html">Home</a>
-            <a href="contatenos.html">Contate-nos</a>
-            <a href="#">Termos</a>
-        </div>
-        <div class="footer-social">
-            <a href="https://www.instagram.com/premix.oficial/"><img src="../img/icon-instagram.png" alt="Instagram"></a>
-            <a href="https://www.linkedin.com/company/premix-oficial/?viewAsMember=true"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
-            <a href="https://github.com/premix-oficiall"><img src="../img/icon-github.png" alt="GitHub"></a>
-        </div>
+      <div class="footer-logo">
+        <img src="../img/logobranca.png" alt="Logo Premix">
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="contatenos.html">Contate-nos</a>
+        <a href="#">Termos</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/premix.oficial/"><img src="../img/icon-instagram.png" alt="Instagram"></a>
+        <a href="https://www.linkedin.com/company/premix-oficial/?viewAsMember=true"><img src="../img/icon-linkedin.png" alt="LinkedIn"></a>
+        <a href="https://github.com/premix-oficiall"><img src="../img/icon-github.png" alt="GitHub"></a>
+      </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
+      <p>&copy; 2025 Premix. Todos os direitos reservados.</p>
     </div>
-</footer>
+  </footer>
+
   <script>
-    // Funcionalidade do formulário de contato
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('contactForm');
       const clearBtn = document.getElementById('clearBtn');
       const submitBtn = document.getElementById('submitBtn');
       
+      // URL da API - CORRIGIDA
+      const API_URL = 'https://premix-sitecode1.onrender.com/api/contatos';
+      
       // Função para limpar o formulário
       clearBtn.addEventListener('click', function() {
         if (confirm('Tem certeza que deseja limpar todos os campos?')) {
           form.reset();
-          // Remove classes de validação
           const inputs = form.querySelectorAll('input, textarea');
           inputs.forEach(input => {
             input.classList.remove('valid', 'invalid');
@@ -197,9 +199,11 @@
         this.value = value;
       });
       
-      // Submissão do formulário
-      form.addEventListener('submit', function(e) {
+      // Submissão do formulário - CORRIGIDA
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        console.log('📤 Iniciando envio do formulário...');
         
         // Validar todos os campos
         let isFormValid = true;
@@ -220,95 +224,61 @@
         }
         
         if (isFormValid) {
-          // Simular envio
+          // Coletar dados do formulário
+          const formData = {
+            nome: document.getElementById('nome').value.trim(),
+            telefone: document.getElementById('telefone').value.trim(),
+            empresa: document.getElementById('empresa').value.trim(),
+            mensagem: document.getElementById('mensagem').value.trim(),
+            termos: document.getElementById('termos').checked,
+            novidades: document.getElementById('novidades').checked
+          };
+          
+          console.log('📦 Dados a serem enviados:', formData);
+          
+          // Desabilitar botão
           submitBtn.disabled = true;
           submitBtn.innerHTML = 'Enviando...';
           
-          setTimeout(() => {
-            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-            form.reset();
+          try {
+            // Enviar para API
+            const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            console.log('📨 Resposta da API:', result);
+            
+            if (result.success) {
+              alert('✅ ' + result.message);
+              form.reset();
+              
+              // Remover classes de validação
+              const allInputs = form.querySelectorAll('input, textarea');
+              allInputs.forEach(input => {
+                input.classList.remove('valid', 'invalid');
+              });
+            } else {
+              alert('❌ Erro: ' + result.message);
+            }
+            
+          } catch (error) {
+            console.error('💥 Erro na requisição:', error);
+            alert('❌ Erro ao enviar mensagem. Tente novamente.');
+          } finally {
+            // Reabilitar botão
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'Enviar';
-            
-            // Remover classes de validação
-            const allInputs = form.querySelectorAll('input, textarea');
-            allInputs.forEach(input => {
-              input.classList.remove('valid', 'invalid');
-            });
-          }, 2000);
+          }
         } else {
-          alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+          alert('⚠️ Por favor, preencha todos os campos obrigatórios corretamente.');
         }
       });
     });
   </script>
-<script>
-(async function() {
-  const container = document.getElementById('header');
-  if (!container) return;
-
-  const isInPages = window.location.pathname.includes('/pages/');
-  const headerUrl = isInPages ? '../header.html' : 'header.html';
-
-  try {
-    const res = await fetch(headerUrl);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const html = await res.text();
-    container.innerHTML = html;
-
-    // Se estivermos em /pages/, prefixa '../' em URLs relativas dentro do header
-    if (isInPages) {
-      const toFix = [
-        { sel: 'img', attr: 'src' },
-        { sel: 'a', attr: 'href' },
-        { sel: 'link', attr: 'href' },
-        { sel: 'script', attr: 'src' }
-      ];
-      toFix.forEach(({sel, attr}) => {
-        container.querySelectorAll(sel).forEach(el => {
-          const val = el.getAttribute(attr);
-          if (!val) return;
-          if (val.startsWith('http') || val.startsWith('/') || val.startsWith('../') || val.startsWith('data:')) return;
-          el.setAttribute(attr, '../' + val);
-        });
-      });
-    }
-  } catch (err) {
-    console.error('Não foi possível carregar header:', err);
-
-    // Fallback simples (funciona quando abre com file://)
-    if (isInPages) {
-      container.innerHTML = `
-        <header class="header">
-          <div class="logo"><img src="../img/logobranca.png" alt="logo premix"></div>
-          <div class="menu-e-botao">
-            <nav class="nav"><ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="cadastro.html">Cadastro</a></li>
-            </ul></nav>
-            <a href="download.html" class="download-button">Download</a>
-          </div>
-        </header>
-      `;
-    } else {
-      container.innerHTML = `
-        <header class="header">
-          <div class="logo"><img src="img/logobranca.png" alt="logo premix"></div>
-          <div class="menu-e-botao">
-            <nav class="nav"><ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="pages/faq.html">FAQ</a></li>
-              <li><a href="pages/cadastro.html">Cadastro</a></li>
-            </ul></nav>
-            <a href="pages/download.html" class="download-button">Download</a>
-          </div>
-        </header>
-      `;
-    }
-  }
-})();
-</script>
-
 </body>
 </html>

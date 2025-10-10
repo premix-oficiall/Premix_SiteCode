@@ -49,3 +49,6 @@ app.use('/api/webhooks', webhookRoutes);
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+const contatoRoutes = require('./src/routes/ContatoRoutes');
+app.use('/api/contatos', contatoRoutes);
+

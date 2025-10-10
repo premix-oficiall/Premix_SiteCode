@@ -43,4 +43,5 @@ const contatoSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Contato', contatoSchema);
+
+module.exports = mongoose.model('contatos', contatosSchema);

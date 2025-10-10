@@ -1,4 +1,4 @@
-const Contato = require('../models/ContatoModel');
+const Contato = require('../models/Contato');
 
 // Criar novo contato
 exports.criarContato = async (req, res) => {
@@ -261,4 +261,5 @@ exports.estatisticas = async (req, res) => {
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
+
 };

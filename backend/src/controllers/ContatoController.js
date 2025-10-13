@@ -139,3 +139,96 @@ exports.estatisticas = async (req, res) => {
     });
   } 
 };
+
+// ✅ FUNÇÕES ADICIONAIS PARA AS ROTAS QUE ESTAVAM FALTANDO:
+
+// Deletar contato
+exports.deletarContato = async (req, res) => {
+  try {
+    const contato = await Contato.findByIdAndDelete(req.params.id);
+    
+    if (!contato) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Contato não encontrado.' 
+      });
+    }
+
+    console.log('🗑️ Contato deletado:', req.params.id);
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Contato deletado com sucesso.' 
+    });
+
+  } catch (error) {
+    console.error('❌ Erro ao deletar contato:', error);
+    
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'ID inválido.' 
+      });
+    }
+
+    res.status(500).json({ 
+      success: false, 
+      message: 'Erro ao deletar contato.',
+      error: error.message
+    });
+  }
+};
+
+// Atualizar status do contato
+exports.atualizarStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    
+    console.log('📝 Atualizando status:', { id: req.params.id, status });
+
+    // Validar status
+    if (!['pendente', 'lido', 'respondido'].includes(status)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Status inválido. Use: pendente, lido ou respondido.' 
+      });
+    }
+
+    const contato = await Contato.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!contato) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Contato não encontrado.' 
+      });
+    }
+
+    console.log('✅ Status atualizado:', contato._id);
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'Status atualizado com sucesso.',
+      data: contato 
+    });
+
+  } catch (error) {
+    console.error('❌ Erro ao atualizar status:', error);
+    
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'ID inválido.' 
+      });
+    }
+
+    res.status(500).json({ 
+      success: false, 
+      message: 'Erro ao atualizar status.',
+      error: error.message
+    });
+  }
+};

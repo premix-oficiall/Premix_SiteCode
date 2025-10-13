@@ -1,5 +1,5 @@
 const Gestor = require('../models/Gestor');
-const client = require('../config/mercadopagoConfig');
+const client = require('../config/mercadoPagoConfig');
 const { Payment } = require('mercadopago');
 
 // ✅ ADICIONE ISSO NO TOPO - fetch para Node.js
@@ -178,3 +178,4 @@ async function ativarGestor(gestorId) {
     console.error('❌ Erro ao ativar gestor:', error);
   }
 }
+

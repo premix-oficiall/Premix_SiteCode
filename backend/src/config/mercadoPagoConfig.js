@@ -1,10 +1,13 @@
 const { MercadoPagoConfig } = require('mercadopago');
 
-// Configuração nova da versão 2.x
+// ✅ CONFIGURAÇÃO CORRIGIDA para v2.x
 const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+  options: { 
+    timeout: 5000 
+  }
 });
 
-console.log('✅ Mercado Pago v2.9.0 configurado!');
+console.log('✅ Mercado Pago configurado - Token:', process.env.MERCADOPAGO_ACCESS_TOKEN ? 'PRESENTE' : 'AUSENTE');
 
 module.exports = client;

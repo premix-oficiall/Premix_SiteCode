@@ -12,7 +12,7 @@ exports.criarPreferenciaPagamento = async (req, res) => {
     const planos = {
       'unitario': 15.00,
       'light': 70.00, 
-      'premium': 200.00
+      'premium': 250.00
     };
 
     const preference = new Preference(client);
@@ -94,7 +94,7 @@ exports.criarPagamentoExistente = async (req, res) => {
     const planos = {
       'unitario': 15.00,
       'light': 70.00, 
-      'premium': 200.00
+      'premium': 250.00
     };
 
     const preference = new Preference(client);
@@ -163,3 +163,4 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

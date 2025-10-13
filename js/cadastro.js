@@ -152,7 +152,7 @@ function setupRealTimeValidation() {
 }
 
 // ================================
-// Conta Existente - Interface
+// Conta Existente - Interface CORRIGIDA
 // ================================
 function showContaExistente(gestor) {
     contaExistente = gestor;
@@ -174,25 +174,48 @@ function showContaExistente(gestor) {
     
     mensagemDiv.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: space-between;">
-            <div>
-                <strong>🎯 Conta Encontrada!</strong>
-                <p style="margin: 5px 0 0 0; font-size: 14px;">
-                    Encontramos uma conta com este email (<strong>${gestor.email}</strong>) que ainda não foi ativada.
+            <div style="flex: 1;">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px; font-size: 18px;"></i>
+                    <strong style="font-size: 16px;">Conta selecionada!</strong>
+                </div>
+                <p style="margin: 0; font-size: 14px; line-height: 1.4;">
+                    <strong>Usuário:</strong> ${gestor.usuario}<br>
+                    <strong>Email:</strong> ${gestor.email}<br>
+                    <strong>Status:</strong> <span style="color: #ff9800;">Aguardando pagamento</span>
                 </p>
             </div>
-            <button type="button" id="btn-usar-conta" class="btn-continuar" 
-                    style="background: #4caf50; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
-                Usar Esta Conta
-            </button>
+            <div style="margin-left: 15px;">
+                <button type="button" id="btn-ir-para-pagamento" class="btn-continuar" 
+                        style="background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap;">
+                    <i class="fas fa-credit-card" style="margin-right: 5px;"></i>
+                    Pagar Agora ›
+                </button>
+            </div>
         </div>
     `;
     
-    document.getElementById("btn-usar-conta").addEventListener("click", function() {
-        usarContaExistente(gestor);
+    // ✅ CORREÇÃO: Adiciona evento para o botão de pagamento
+    document.getElementById("btn-ir-para-pagamento").addEventListener("click", function() {
+        console.log("💰 Indo diretamente para pagamento da conta existente...");
+        
+        // Avança para a etapa de pagamento
+        if (validateCurrentStep(1)) {
+            console.log(`✅ Etapa 1 validada com sucesso (conta existente)`);
+            markStepCompleted(1);
+            currentStep = 2;
+            showStep(currentStep);
+            updateTimeline();
+            animateStepTransition();
+        }
     });
     
+    // ✅ CORREÇÃO: Permite avançar com o botão normal também
     emailValido = true;
+    usuarioValido = true;
     atualizarBotaoProximo();
+    
+    console.log("✅ Conta existente configurada - botão próximo deve estar habilitado");
 }
 
 function esconderContaExistente() {
@@ -226,15 +249,28 @@ function usarContaExistente(gestor) {
         `;
     }
     
+    // ✅ CORREÇÃO: Habilita o botão próximo
     setTimeout(() => {
-        nextStep(1);
+        emailValido = true;
+        usuarioValido = true;
+        atualizarBotaoProximo();
     }, 1000);
 }
 
 function atualizarBotaoProximo() {
     const btnNext = document.querySelector(".btn-next");
     if (btnNext) {
-        btnNext.disabled = !(emailValido && usuarioValido);
+        // ✅ CORREÇÃO: Permite avançar se tem conta existente
+        const podeAvançar = (emailValido && usuarioValido) || contaExistente;
+        btnNext.disabled = !podeAvançar;
+        
+        console.log("🔍 Estado do botão próximo:", {
+            emailValido,
+            usuarioValido, 
+            contaExistente: !!contaExistente,
+            podeAvançar,
+            btnDisabled: btnNext.disabled
+        });
     }
 }
 
@@ -285,6 +321,18 @@ function animateSuccess() {
 // ================================
 function nextStep(step) {
     if (isLoading) return;
+    
+    // ✅ CORREÇÃO: Se tem conta existente, validação é automática
+    if (step === 1 && contaExistente) {
+        console.log("✅ Conta existente selecionada - validação automática");
+        markStepCompleted(step);
+        currentStep = step + 1;
+        showStep(currentStep);
+        updateTimeline();
+        animateStepTransition();
+        return;
+    }
+    
     if (validateCurrentStep(step)) {
         console.log(`✅ Etapa ${step} validada com sucesso`);
         markStepCompleted(step);
@@ -342,7 +390,7 @@ function markStepCompleted(step) {
 }
 
 // ================================
-// Validação
+// Validação - CORRIGIDA
 // ================================
 function validateCurrentStep(step) {
     console.log(`🔍 Validando etapa ${step}...`);
@@ -350,6 +398,12 @@ function validateCurrentStep(step) {
     if (!form) {
         console.log(`❌ Formulário step${step}Form não encontrado`);
         return false;
+    }
+    
+    // ✅ CORREÇÃO: Se tem conta existente, validação é automática
+    if (step === 1 && contaExistente) {
+        console.log("✅ Conta existente selecionada - validação automática");
+        return true;
     }
     
     const inputs = form.querySelectorAll("input[required]");

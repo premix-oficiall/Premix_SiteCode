@@ -1,4 +1,4 @@
-const client = require('../config/mercadoPagoConfig');
+const client = require('../config/mercadopagoConfig');
 const { Preference } = require('mercadopago');
 const Gestor = require('../models/Gestor');
 
@@ -20,7 +20,9 @@ exports.criarPreferenciaPagamento = async (req, res) => {
     const requestBody = {
       items: [
         {
+          id: `plano-${plano}`,
           title: `Plano ${plano} - PremiX`,
+          description: `Assinatura do plano ${plano}`,
           unit_price: planos[plano],
           quantity: 1,
           currency_id: 'BRL'
@@ -31,21 +33,34 @@ exports.criarPreferenciaPagamento = async (req, res) => {
         failure: 'https://premix-frontend.onrender.com/pages/error.html',
         pending: 'https://premix-frontend.onrender.com/pages/pending.html'
       },
-      auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
+      auto_return: 'approved',
       external_reference: gestorId.toString(),
-      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
+      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago',
+      // ✅ CORREÇÃO: Configurações importantes para sandbox
+      binary_mode: true,
+      expires: false,
+      statement_descriptor: "PREMIX",
+      payment_methods: {
+        excluded_payment_types: [],
+        installments: 1
+      }
     };
 
-    console.log('📦 Enviando para MP:', requestBody);
+    console.log('📦 Enviando para MP:', JSON.stringify(requestBody, null, 2));
 
     const result = await preference.create({ body: requestBody });
     
-    console.log('✅ Resposta do MP:', result);
+    console.log('✅ Resposta do MP:', {
+      id: result.id,
+      init_point: result.init_point,
+      sandbox_init_point: result.sandbox_init_point
+    });
 
+    // ✅ CORREÇÃO: Retorna SEMPRE sandbox_init_point para testes
     res.json({
       success: true,
       id: result.id,
-      init_point: result.init_point,
+      init_point: result.sandbox_init_point, // ⬅️ USA SANDBOX
       sandbox_init_point: result.sandbox_init_point
     });
 
@@ -87,7 +102,9 @@ exports.criarPagamentoExistente = async (req, res) => {
     const requestBody = {
       items: [
         {
+          id: `plano-${plano}-existente`,
           title: `Plano ${plano} - PremiX (Conta Existente)`,
+          description: `Assinatura do plano ${plano} para conta existente`,
           unit_price: planos[plano],
           quantity: 1,
           currency_id: 'BRL'
@@ -98,21 +115,33 @@ exports.criarPagamentoExistente = async (req, res) => {
         failure: 'https://premix-frontend.onrender.com/pages/error.html',
         pending: 'https://premix-frontend.onrender.com/pages/pending.html'
       },
-      auto_return: 'approved', // ✅ CORREÇÃO ADICIONADA AQUI
+      auto_return: 'approved',
       external_reference: gestorId.toString(),
-      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago'
+      notification_url: 'https://premix-sitecode1.onrender.com/api/webhooks/mercadopago',
+      // ✅ CORREÇÃO: Configurações importantes para sandbox
+      binary_mode: true,
+      expires: false,
+      statement_descriptor: "PREMIX",
+      payment_methods: {
+        excluded_payment_types: [],
+        installments: 1
+      }
     };
 
-    console.log('📦 Enviando pagamento existente para MP:', requestBody);
+    console.log('📦 Enviando pagamento existente para MP:', JSON.stringify(requestBody, null, 2));
 
     const result = await preference.create({ body: requestBody });
     
-    console.log('✅ Pagamento existente criado:', result);
+    console.log('✅ Pagamento existente criado:', {
+      id: result.id,
+      sandbox_init_point: result.sandbox_init_point
+    });
 
+    // ✅ CORREÇÃO: Retorna SEMPRE sandbox_init_point para testes
     res.json({
       success: true,
       id: result.id,
-      init_point: result.init_point,
+      init_point: result.sandbox_init_point, // ⬅️ USA SANDBOX
       sandbox_init_point: result.sandbox_init_point
     });
 
@@ -134,4 +163,3 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-

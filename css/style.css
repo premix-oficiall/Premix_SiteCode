@@ -66,6 +66,17 @@ body{
     position: relative;
 }
 
+.nav-tab.active-tab {
+    background-color: #fbca48; /* Fundo amarelo */
+    color: #0f0f0f; /* Texto escuro */
+    /* ... outras propriedades ... */
+}
+
+.nav-tab.active-tab:hover {
+    background-color: #fbca48 !important; 
+    color: #0f0f0f !important; 
+}
+
 .nav-tab:hover {
     background-color: #37373d;
     color: #ffffff;
@@ -305,11 +316,13 @@ main {
 
 .terminal-window {
   background-color: #1e1e1e;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  height: 100%;
-  border: 1px solid #333;
+  box-shadow:
+    0 0 10px rgba(251, 197, 49, 0.3),
+    0 0 20px rgba(251, 197, 49, 0.1);
+  border: 1px solid rgba(251, 197, 49, 0.6);
+  transition: all 0.3s ease;
 }
 
 .terminal-header {
@@ -545,22 +558,19 @@ main {
     animation: moveLine 10s linear infinite; /* Animação de movimento */
 }
 
-/*terminal*/
-.terminal-window {
-  background-color: var(--bg-tertiary);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
+.terminal-window:hover {
+  box-shadow:
+    0 0 15px rgba(251, 197, 49, 0.5),
+    0 0 30px rgba(251, 197, 49, 0.2);
 }
 
 .terminal-header {
-  background-color: var(--bg-secondary);
-  padding: 12px 16px;
+  background-color: #2d2d30;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(251, 197, 49, 0.3); /* mantém o tom da borda */
 }
 
 .terminal-controls {
@@ -594,10 +604,18 @@ main {
 
 .terminal-content {
   padding: 20px;
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 14px;
   line-height: 1.8;
+  border-radius: 0 0 12px 12px;
 }
+
+.terminal-content:hover {
+  box-shadow:
+    0 0 15px rgba(251, 197, 49, 0.5),
+    0 0 30px rgba(251, 197, 49, 0.2);
+}
+
 
 .terminal-line {
   margin-bottom: 8px;

@@ -1,4 +1,4 @@
-const client = require('../config/mercadopagoConfig');
+const client = require('../config/mercadoPagoConfig');
 const { Preference } = require('mercadopago');
 const Gestor = require('../models/Gestor');
 
@@ -163,4 +163,5 @@ exports.verificarPagamento = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 

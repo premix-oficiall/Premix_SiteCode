@@ -16,9 +16,10 @@ router.get('/estatisticas', contatoController.estatisticas);
 router.get('/:id', contatoController.buscarContatoPorId);
 
 // PATCH - Atualizar status do contato
-router.patch('/:id/status', contatoController.atualizarStatus);
+//router.patch('/:id/status', contatoController.atualizarStatus);
 
 // DELETE - Deletar contato
 router.delete('/:id', contatoController.deletarContato);
+
 
 module.exports = router;

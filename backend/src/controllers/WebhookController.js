@@ -17,18 +17,17 @@ exports.webhookMercadoPago = async (req, res) => {
     console.log('📊 Resource:', resource);
     console.log('📊 ID:', id);
 
-    // ✅ CORREÇÃO: Agora lida com merchant_order também
-    if (type === 'payment' || topic === 'payment') {
-      console.log('💰 Processando webhook de PAGAMENTO');
-      await processarPagamento(data || id);
-      
-    } else if (type === 'merchant_order' || topic === 'merchant_order') {
+    // ✅ CORREÇÃO: Processa merchant_order primeiro
+    if (type === 'merchant_order' || topic === 'merchant_order') {
       console.log('📦 Processando webhook de MERCHANT ORDER');
       await processarMerchantOrder(resource);
       
+    } else if (type === 'payment' || topic === 'payment') {
+      console.log('💰 Processando webhook de PAGAMENTO');
+      await processarPagamento(data || id);
+      
     } else {
       console.log('🔍 Webhook de tipo desconhecido:', type || topic);
-      console.log('🔍 Body completo:', JSON.stringify(req.body, null, 2));
     }
     
   } catch (error) {
@@ -36,7 +35,7 @@ exports.webhookMercadoPago = async (req, res) => {
   }
 };
 
-// ✅ FUNÇÃO PARA PROCESSAR PAGAMENTOS
+// ✅ FUNÇÃO CORRIGIDA PARA PROCESSAR PAGAMENTOS
 async function processarPagamento(paymentData) {
   try {
     let paymentId;
@@ -56,12 +55,14 @@ async function processarPagamento(paymentData) {
     
     console.log('📊 Status do pagamento:', paymentDetails.status);
     console.log('📊 External Reference:', paymentDetails.external_reference);
-    console.log('📊 Payment Details:', JSON.stringify(paymentDetails, null, 2));
     
+    // ✅✅✅ CORREÇÃO CRÍTICA: Só ativa se APROVADO
     if (paymentDetails.status === 'approved') {
+      console.log('✅ PAGAMENTO APROVADO - Ativando gestor');
       await ativarGestor(paymentDetails.external_reference);
     } else {
-      console.log('📊 Pagamento NÃO aprovado. Status:', paymentDetails.status);
+      console.log('❌ Pagamento NÃO aprovado. Status:', paymentDetails.status);
+      console.log('⏸️ Gestor NÃO será ativado');
     }
     
   } catch (error) {
@@ -69,12 +70,11 @@ async function processarPagamento(paymentData) {
   }
 }
 
-// ✅ NOVA FUNÇÃO PARA PROCESSAR MERCHANT ORDERS - CORRIGIDA
+// ✅✅✅ FUNÇÃO CRITICAMENTE CORRIGIDA - MERCHANT ORDERS
 async function processarMerchantOrder(resourceUrl) {
   try {
     console.log('📦 Buscando merchant order da URL:', resourceUrl);
     
-    // ✅ CORREÇÃO: Usa fetch direto na API do MP
     const response = await fetch(resourceUrl, {
       headers: {
         'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
@@ -88,74 +88,62 @@ async function processarMerchantOrder(resourceUrl) {
     const orderDetails = await response.json();
     
     console.log('📊 Merchant Order Status:', orderDetails.status);
+    console.log('📊 Order Status:', orderDetails.order_status); // ← IMPORTANTE!
+    console.log('📊 Paid Amount:', orderDetails.paid_amount, '/', orderDetails.total_amount);
     console.log('📊 Payments:', orderDetails.payments);
-    console.log('📊 Order Details:', JSON.stringify(orderDetails, null, 2));
     
-    // Se tem pagamentos, processa o primeiro
-    if (orderDetails.payments && orderDetails.payments.length > 0) {
-      const paymentId = orderDetails.payments[0].id;
-      console.log('💰 Payment ID encontrado na order:', paymentId);
+    // ✅✅✅ CORREÇÃO: VERIFICAÇÃO COMPLETA ANTES DE ATIVAR
+    const pagamentoAprovado = verificarSePagamentoFoiAprovado(orderDetails);
+    
+    if (pagamentoAprovado) {
+      console.log('✅ PAGAMENTO VALIDADO - Processando pagamentos...');
       
-      // Processa o pagamento
-      await processarPagamento(paymentId);
-    } else {
-      console.log('📊 Nenhum pagamento encontrado na order');
-      
-      // ✅ Tenta buscar por external_reference direto na order
-      if (orderDetails.external_reference) {
-        console.log('🔍 External Reference na order:', orderDetails.external_reference);
-        await ativarGestor(orderDetails.external_reference);
+      // Processa cada pagamento da order
+      for (const paymentInfo of orderDetails.payments) {
+        await processarPagamento(paymentInfo.id);
       }
+      
+    } else {
+      console.log('❌ PAGAMENTO NÃO CONFIRMADO - Nenhuma ação será tomada');
+      console.log('💡 Motivo:', {
+        status: orderDetails.status,
+        order_status: orderDetails.order_status,
+        paid_amount: orderDetails.paid_amount,
+        total_amount: orderDetails.total_amount,
+        payments_count: orderDetails.payments?.length || 0
+      });
     }
     
   } catch (error) {
     console.error('❌ Erro ao processar merchant order:', error);
-    
-    // ✅ CORREÇÃO: Tenta método alternativo
-    console.log('🔄 Tentando método alternativo...');
-    await tentarMetodoAlternativo(resourceUrl);
   }
 }
 
-// ✅ MÉTODO ALTERNATIVO PARA MERCHANT ORDERS
-async function tentarMetodoAlternativo(resourceUrl) {
-  try {
-    // Extrai o ID da URL de forma mais robusta
-    const urlParts = resourceUrl.split('/');
-    const merchantOrderId = urlParts[urlParts.length - 1];
-    
-    console.log('🔄 Tentando com ID extraído:', merchantOrderId);
-    
-    // Tenta buscar informações básicas via API
-    const apiUrl = `https://api.mercadopago.com/merchant_orders/${merchantOrderId}`;
-    const response = await fetch(apiUrl, {
-      headers: {
-        'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
-      }
-    });
-    
-    if (response.ok) {
-      const orderData = await response.json();
-      console.log('✅ Dados da order obtidos:', JSON.stringify(orderData, null, 2));
-      
-      if (orderData.payments && orderData.payments.length > 0) {
-        const paymentId = orderData.payments[0].id;
-        console.log('💰 Payment ID encontrado:', paymentId);
-        await processarPagamento(paymentId);
-      } else if (orderData.external_reference) {
-        console.log('🔍 External Reference encontrado:', orderData.external_reference);
-        await ativarGestor(orderData.external_reference);
-      }
-    } else {
-      console.log('❌ Falha ao buscar order:', response.status);
-    }
-    
-  } catch (error) {
-    console.error('❌ Erro no método alternativo:', error);
+// ✅ NOVA FUNÇÃO: VERIFICA SE O PAGAMENTO REALMENTE FOI APROVADO
+function verificarSePagamentoFoiAprovado(orderDetails) {
+  // Verifica se há pagamentos na order
+  if (!orderDetails.payments || orderDetails.payments.length === 0) {
+    console.log('⚠️ Nenhum pagamento encontrado na order');
+    return false;
   }
+  
+  // Verifica se o order_status é 'paid' (pago)
+  if (orderDetails.order_status !== 'paid') {
+    console.log('⚠️ Order status não é "paid":', orderDetails.order_status);
+    return false;
+  }
+  
+  // Verifica se o valor pago é >= valor total
+  if (orderDetails.paid_amount < orderDetails.total_amount) {
+    console.log('⚠️ Valor pago insuficiente:', orderDetails.paid_amount, '/', orderDetails.total_amount);
+    return false;
+  }
+  
+  console.log('✅ Todas as verificações passaram - Pagamento aprovado!');
+  return true;
 }
 
-// ✅ FUNÇÃO PARA ATIVAR GESTOR
+// ✅ FUNÇÃO PARA ATIVAR GESTOR (MANTIDA)
 async function ativarGestor(gestorId) {
   try {
     if (!gestorId) {
@@ -163,11 +151,9 @@ async function ativarGestor(gestorId) {
       return;
     }
     
-    // ⚠️ CORREÇÃO: Garante que é string e remove caracteres extras
     gestorId = gestorId.toString().trim();
     console.log('🔍 Gestor ID processado:', gestorId);
     
-    // VERIFICA SE O GESTOR EXISTE ANTES DE ATUALIZAR
     const gestorExistente = await Gestor.findById(gestorId);
     console.log('🔍 Gestor encontrado no banco:', gestorExistente ? 'SIM' : 'NÃO');
     
@@ -178,11 +164,15 @@ async function ativarGestor(gestorId) {
     
     console.log('🔍 Status atual do gestor:', {
       isActive: gestorExistente.isActive,
-      usuario: gestorExistente.usuario,
-      email: gestorExistente.email
+      usuario: gestorExistente.usuario
     });
     
-    // ATIVA O GESTOR
+    // ⚠️ CORREÇÃO: Só atualiza se NÃO estiver ativo
+    if (gestorExistente.isActive) {
+      console.log('ℹ️ Gestor já está ativo - Nenhuma ação necessária');
+      return;
+    }
+    
     const resultado = await Gestor.updateOne(
       { _id: gestorId },
       { 
@@ -202,16 +192,6 @@ async function ativarGestor(gestorId) {
     
     if (resultado.modifiedCount > 0) {
       console.log('🎉 Gestor ativado com sucesso!');
-      
-      // VERIFICAÇÃO FINAL
-      const gestorVerificado = await Gestor.findById(gestorId);
-      console.log('✅ VERIFICAÇÃO FINAL - Gestor ativado:', {
-        _id: gestorVerificado._id,
-        usuario: gestorVerificado.usuario,
-        isActive: gestorVerificado.isActive,
-        paymentStatus: gestorVerificado.paymentStatus,
-        dataAtivacao: gestorVerificado.dataAtivacao
-      });
     } else {
       console.log('⚠️ Nenhum documento foi modificado');
     }

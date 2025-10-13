@@ -19,7 +19,7 @@ const GestorSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     required: true, // OBRIGATÓRIO - igual ao schema
-    default: true
+    default: false
   },
   email: {
     type: String,

@@ -92,8 +92,8 @@ body {
 .btn-download.recommended::before {
     content: "Recomendado";
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -1px;
+    right: -2px;
     background-color: #4CAF50;
     color: white;
     font-size: 0.7rem;
@@ -238,14 +238,17 @@ body {
 .benefit-item h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
-    margin-bottom: 4px;
+    color: #fbca48;
+    margin-bottom: 2px;
+    text-align: left; 
+    width: 100%;
 }
 
 .benefit-item p {
     color: #ccc;
     line-height: 1.5;
     font-size: 0.95rem;
+    text-align: left;
 }
 
 /* Dashboard Preview */
@@ -269,7 +272,11 @@ body {
     display: flex;
     gap: 6px;
 }
-
+.preview-content h1 {
+    line-height: 1.5;
+    font-size: 0.70rem;
+    color: red;
+}
 .control {
     width: 12px;
     height: 12px;

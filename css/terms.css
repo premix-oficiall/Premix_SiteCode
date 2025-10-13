@@ -1,0 +1,873 @@
+/* ========================================
+   TERMOS DE USO - PREMIX
+   Design System Completo
+   ======================================== */
+
+/* Reset e Configurações Básicas */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background-color: #0f0f0f;
+  color: #f2f2f2;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Main Content */
+.main-content {
+  padding-top: 60px;
+  min-height: 100vh;
+  background-color: #0f0f0f;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero-section {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  padding: 60px 40px 40px; /* Reduzido o padding */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(251, 202, 72, 0.03) 0%, transparent 70%); /* Efeito mais sutil */
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Reduzido */
+  height: 60px; /* Reduzido */
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  border-radius: 15px; /* Levemente reduzido */
+  margin-bottom: 20px; /* Reduzido */
+  box-shadow: 0 8px 20px rgba(251, 202, 72, 0.2); /* Sombra mais suave */
+  /* animation: float 3s ease-in-out infinite; */ /* Removida a animação */
+}
+
+.hero-icon i {
+  font-size: 2rem; /* Reduzido */
+  color: #000;
+}
+
+/* Removida a keyframe float */
+
+.hero-content h1 {
+  font-size: 2.8rem; /* Reduzido */
+  font-weight: 700;
+  color: #fbca48;
+  margin-bottom: 15px; /* Reduzido */
+  letter-spacing: -1px;
+  white-space: nowrap; 
+
+}
+
+.hero-content p {
+  font-size: 1.1rem; /* Reduzido */
+  color: #ccc;
+  margin-bottom: 20px; /* Reduzido */
+}
+
+/* Removida a classe .last-updated */
+
+/* ========================================
+   TERMS NAVIGATION
+   ======================================== */
+.terms-navigation {
+  background: #1a1a1a;
+  padding: 20px 20px; /* Reduzido */
+  border-bottom: 1px solid rgba(251, 202, 72, 0.1);
+  /* position: sticky; */ /* Removido sticky */
+  /* top: 60px; */ /* Removido top */
+  z-index: 50;
+  /* backdrop-filter: blur(10px); */ /* Removido blur */
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px; /* Reduzido */
+  overflow-x: auto;
+  padding-bottom: 0px; /* Removido padding */
+}
+
+.nav-container::-webkit-scrollbar {
+  height: 0px; /* Esconde a scrollbar */
+}
+
+.nav-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduzido */
+  padding: 10px 15px; /* Reduzido */
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px; /* Levemente reduzido */
+  color: #ccc;
+  font-size: 0.85rem; /* Reduzido */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease; /* Transição mais rápida */
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-item i {
+  font-size: 0.9rem; /* Reduzido */
+}
+
+.nav-item:hover {
+  background: rgba(251, 202, 72, 0.08); /* Mais sutil */
+  border-color: rgba(251, 202, 72, 0.2); /* Mais sutil */
+  transform: translateY(-1px); /* Menos movimento */
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  border-color: #fbca48;
+  color: #000;
+  font-weight: 600;
+}
+
+/* ========================================
+   TERMS CONTAINER
+   ======================================== */
+.terms-container {
+  max-width: 900px; /* Levemente reduzido */
+  margin: 40px auto; /* Reduzido */
+  padding: 0 20px 40px; /* Reduzido */
+}
+
+.terms-card {
+  background: rgba(26, 26, 26, 0.7); /* Mais sutil */
+  backdrop-filter: blur(15px); /* Levemente reduzido */
+  border-radius: 15px; /* Levemente reduzido */
+  border: 1px solid rgba(251, 202, 72, 0.08); /* Mais sutil */
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Sombra mais suave */
+}
+
+.terms-navigation .nav-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 100%; 
+    max-width: 1200px; /* Adapte ao seu max-width, se houver */
+    margin: 0 auto; /* Garante que o container interno esteja centralizado */
+}
+
+.terms-navigation .nav-item {
+    border-radius: 6px; 
+    border: 1px solid #3e3e42;
+    transition: all 0.3s ease; 
+}
+
+.terms-navigation .nav-item:hover {
+    transform: translateY(0px); 
+}
+
+/* O contêiner principal também deve ter 100% de largura */
+.terms-navigation {
+    width: 100%;
+    /* Pode ser necessário ajustar o padding vertical */
+    padding: 20px 0; 
+}
+
+
+/* ========================================
+   TERMS SECTIONS
+   ======================================== */
+.terms-section {
+  padding: 40px 40px; /* Reduzido */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03); /* Mais sutil */
+  /* opacity: 0; */ /* Removida animação */
+  /* transform: translateY(20px); */ /* Removida animação */
+  /* animation: fadeInUp 0.6s ease forwards; */ /* Removida animação */
+}
+
+.terms-section:last-of-type {
+  border-bottom: none;
+}
+
+/* Removida keyframe fadeInUp */
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* Reduzido */
+  margin-bottom: 25px; /* Reduzido */
+}
+
+.section-number {
+  flex-shrink: 0;
+  width: 50px; /* Reduzido */
+  height: 50px; /* Reduzido */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  border-radius: 10px; /* Levemente reduzido */
+  font-size: 1.3rem; /* Reduzido */
+  font-weight: 700;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(251, 202, 72, 0.2); /* Sombra mais suave */
+}
+
+.section-title h2 {
+  font-size: 1.8rem; /* Reduzido */
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px; /* Reduzido */
+}
+
+.section-divider {
+  width: 50px; /* Reduzido */
+  height: 3px; /* Reduzido */
+  background: linear-gradient(90deg, #fbca48 0%, transparent 100%);
+  border-radius: 1.5px; /* Reduzido */
+}
+
+.section-content {
+  padding-left: 70px; /* Reduzido */
+}
+
+.section-content p {
+  font-size: 1rem; /* Reduzido */
+  color: #ccc;
+  line-height: 1.7;
+  margin-bottom: 15px; /* Reduzido */
+}
+
+.section-content strong {
+  color: #fbca48;
+  font-weight: 600;
+}
+
+/* ========================================
+   SUBSECTIONS
+   ======================================== */
+.subsection {
+  margin-top: 25px; /* Reduzido */
+  padding: 20px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.4); /* Mais sutil */
+  border-left: 2px solid #fbca48; /* Borda mais fina */
+  border-radius: 6px; /* Levemente reduzido */
+  transition: background 0.2s ease; /* Transição mais simples */
+}
+
+.subsection:hover {
+  background: rgba(15, 15, 15, 0.6); /* Efeito hover mais sutil */
+}
+
+.subsection h3 {
+  font-size: 1.2rem; /* Reduzido */
+  color: #fbca48;
+  margin-bottom: 12px; /* Reduzido */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Reduzido */
+}
+
+.subsection h3 i {
+  font-size: 1.1rem; /* Reduzido */
+}
+
+.subsection p {
+  font-size: 0.95rem; /* Reduzido */
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* ========================================
+   HIGHLIGHT BOX
+   ======================================== */
+.highlight-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px; /* Reduzido */
+  padding: 18px; /* Reduzido */
+  background: rgba(251, 202, 72, 0.08); /* Mais sutil */
+  border: 1px solid rgba(251, 202, 72, 0.2); /* Mais sutil */
+  border-radius: 10px; /* Levemente reduzido */
+  margin-top: 18px; /* Reduzido */
+}
+
+.highlight-box i {
+  font-size: 1.3rem; /* Reduzido */
+  color: #fbca48;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.highlight-box p {
+  margin: 0;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ========================================
+   INFO CARD
+   ======================================== */
+.info-card {
+  display: flex;
+  gap: 15px; /* Reduzido */
+  padding: 20px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.4); /* Mais sutil */
+  border-radius: 10px; /* Levemente reduzido */
+  margin-top: 18px; /* Reduzido */
+  border: 1px solid rgba(255, 255, 255, 0.03); /* Mais sutil */
+}
+
+.info-icon {
+  flex-shrink: 0;
+  width: 45px; /* Reduzido */
+  height: 45px; /* Reduzido */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  border-radius: 8px; /* Levemente reduzido */
+}
+
+.info-icon i {
+  font-size: 1.3rem; /* Reduzido */
+  color: #000;
+}
+
+.info-text h4 {
+  font-size: 1rem; /* Reduzido */
+  color: #fbca48;
+  margin-bottom: 6px; /* Reduzido */
+}
+
+.info-text p {
+  margin: 0;
+  font-size: 0.9rem; /* Reduzido */
+  color: #ccc;
+}
+
+/* ========================================
+   FEATURE LIST
+   ======================================== */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 18px; /* Reduzido */
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px; /* Reduzido */
+  padding: 12px; /* Reduzido */
+  margin-bottom: 8px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.2); /* Mais sutil */
+  border-radius: 6px; /* Levemente reduzido */
+  transition: background 0.2s ease; /* Transição mais simples */
+}
+
+.feature-list li:hover {
+  background: rgba(251, 202, 72, 0.03); /* Efeito hover mais sutil */
+  transform: none; /* Removido movimento */
+}
+
+.feature-list li i {
+  font-size: 1.1rem; /* Reduzido */
+  color: #ff6b6b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-list li span {
+  color: #ccc;
+  font-size: 0.95rem; /* Reduzido */
+  line-height: 1.6;
+}
+
+/* ========================================
+   PROTECTED ITEMS
+   ======================================== */
+.protected-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* FORÇA EXATAMENTE 2 COLUNAS */
+  gap: 12px; /* Reduzido */
+  margin-top: 25px; /* Reduzido */
+}
+
+.protected-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduzido */
+  padding: 12px 15px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.4); /* Mais sutil */
+  border: 1px solid rgba(251, 202, 72, 0.15); /* Mais sutil */
+  border-radius: 8px; /* Levemente reduzido */
+  transition: background 0.2s ease; /* Transição mais simples */
+}
+
+.protected-item:hover {
+  background: rgba(251, 202, 72, 0.03); /* Efeito hover mais sutil */
+  border-color: rgba(251, 202, 72, 0.3); /* Mais sutil */
+  transform: none; /* Removido movimento */
+}
+
+.protected-item i {
+  font-size: 1.2rem; /* Reduzido */
+  color: #fbca48;
+}
+
+.protected-item span {
+  font-size: 0.9rem; /* Reduzido */
+  color: #ccc;
+  font-weight: 500;
+}
+
+/* ========================================
+   WARNING BOX
+   ======================================== */
+.warning-box {
+  display: flex;
+  gap: 15px; /* Reduzido */
+  padding: 20px; /* Reduzido */
+  background: rgba(255, 107, 107, 0.03); /* Mais sutil */
+  border: 1px solid rgba(255, 107, 107, 0.2); /* Mais sutil */
+  border-radius: 10px; /* Levemente reduzido */
+  margin-top: 18px; /* Reduzido */
+}
+
+.warning-icon {
+  flex-shrink: 0;
+  width: 45px; /* Reduzido */
+  height: 45px; /* Reduzido */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 107, 107, 0.15); /* Mais sutil */
+  border-radius: 8px; /* Levemente reduzido */
+}
+
+.warning-icon i {
+  font-size: 1.3rem; /* Reduzido */
+  color: #ff6b6b;
+}
+
+.warning-content h4 {
+  font-size: 1rem; /* Reduzido */
+  color: #ff6b6b;
+  margin-bottom: 6px; /* Reduzido */
+}
+
+.warning-content p {
+  margin: 0;
+  font-size: 0.9rem; /* Reduzido */
+  color: #ccc;
+}
+
+/* ========================================
+   LIABILITY LIST
+   ======================================== */
+.liability-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px; /* Reduzido */
+}
+
+.liability-list li {
+  display: flex;
+  gap: 12px; /* Reduzido */
+  padding: 15px; /* Reduzido */
+  margin-bottom: 10px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.4); /* Mais sutil */
+  border-left: 2px solid #fbca48; /* Borda mais fina */
+  border-radius: 6px; /* Levemente reduzido */
+  transition: background 0.2s ease; /* Transição mais simples */
+}
+
+.liability-list li:hover {
+  background: rgba(251, 202, 72, 0.03); /* Efeito hover mais sutil */
+  transform: none; /* Removido movimento */
+}
+
+.liability-icon {
+  flex-shrink: 0;
+  width: 6px; /* Reduzido */
+  height: 6px; /* Reduzido */
+  margin-top: 7px; /* Ajustado */
+}
+
+.liability-icon i {
+  font-size: 0.4rem; /* Reduzido */
+  color: #fbca48;
+}
+
+.liability-text {
+  flex: 1;
+}
+
+.liability-text strong {
+  display: block;
+  color: #fbca48;
+  font-size: 1rem; /* Reduzido */
+  margin-bottom: 4px; /* Reduzido */
+}
+
+.liability-text p {
+  color: #ccc;
+  font-size: 0.9rem; /* Reduzido */
+  line-height: 1.5;
+}
+
+/* ========================================
+   CONTACT CARD
+   ======================================== */
+.contact-card {
+  padding: 25px; /* Reduzido */
+  background: rgba(15, 15, 15, 0.4); /* Mais sutil */
+  border: 1px solid rgba(251, 202, 72, 0.15); /* Mais sutil */
+  border-radius: 10px; /* Levemente reduzido */
+  margin-top: 25px; /* Reduzido */
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Reduzido */
+  margin-bottom: 18px; /* Reduzido */
+}
+
+.contact-header i {
+  font-size: 1.8rem; /* Reduzido */
+  color: #fbca48;
+}
+
+.contact-header h3 {
+  font-size: 1.3rem; /* Reduzido */
+  color: #fff;
+  margin: 0;
+}
+
+.contact-card p {
+  color: #ccc;
+  margin-bottom: 20px; /* Reduzido */
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Reduzido */
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Reduzido */
+  padding: 12px 18px; /* Reduzido */
+  background: rgba(251, 202, 72, 0.08); /* Mais sutil */
+  border: 1px solid rgba(251, 202, 72, 0.15); /* Mais sutil */
+  border-radius: 8px; /* Levemente reduzido */
+  color: #fbca48;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease; /* Transição mais simples */
+}
+
+.contact-method:hover {
+  background: rgba(251, 202, 72, 0.12); /* Efeito hover mais sutil */
+  border-color: rgba(251, 202, 72, 0.3); /* Mais sutil */
+  transform: none; /* Removido movimento */
+  text-decoration: none;
+  color: #fbca48;
+}
+
+.contact-method i {
+  font-size: 1.1rem; /* Reduzido */
+}
+
+/* ========================================
+   ACCEPTANCE FOOTER
+   ======================================== */
+.acceptance-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px; /* Reduzido */
+  padding: 30px 40px; /* Reduzido */
+  background: linear-gradient(135deg, rgba(251, 202, 72, 0.08) 0%, rgba(243, 156, 18, 0.03) 100%); /* Mais sutil */
+  border-top: 1px solid rgba(251, 202, 72, 0.15); /* Mais sutil */
+}
+
+.acceptance-content {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Reduzido */
+  flex: 1;
+}
+
+.acceptance-icon {
+  flex-shrink: 0;
+  width: 50px; /* Reduzido */
+  height: 50px; /* Reduzido */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  border-radius: 10px; /* Levemente reduzido */
+}
+
+.acceptance-icon i {
+  font-size: 1.5rem; /* Reduzido */
+  color: #000;
+}
+
+.acceptance-text h3 {
+  font-size: 1.2rem; /* Reduzido */
+  color: #fff;
+  margin-bottom: 4px; /* Reduzido */
+}
+
+.acceptance-text p {
+  font-size: 0.9rem; /* Reduzido */
+  color: #ccc;
+  margin: 0;
+}
+
+.btn-accept {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Reduzido */
+  padding: 12px 25px; /* Reduzido */
+  background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.95rem; /* Reduzido */
+  border-radius: 8px; /* Levemente reduzido */
+  text-decoration: none;
+  transition: all 0.2s ease; /* Transição mais rápida */
+  box-shadow: 0 4px 10px rgba(251, 202, 72, 0.2); /* Sombra mais suave */
+  white-space: nowrap;
+}
+
+.btn-accept:hover {
+  transform: translateY(-2px); /* Menos movimento */
+  box-shadow: 0 6px 15px rgba(251, 202, 72, 0.3); /* Sombra mais suave */
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-accept i {
+  font-size: 0.9rem; /* Reduzido */
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (max-width: 1024px) {
+  .hero-content h1 {
+    font-size: 2.5rem; /* Ajustado */
+  }
+
+  .section-content {
+    padding-left: 0;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 50px 20px 30px; /* Reduzido */
+  }
+
+  .hero-content h1 {
+    font-size: 2rem; /* Reduzido */
+  }
+
+  .hero-content p {
+    font-size: 0.95rem; /* Reduzido */
+  }
+
+  .hero-icon {
+    width: 50px; /* Reduzido */
+    height: 50px; /* Reduzido */
+  }
+
+  .hero-icon i {
+    font-size: 1.8rem; /* Reduzido */
+  }
+
+  .terms-navigation {
+    padding: 15px 15px; /* Reduzido */
+  }
+
+  .nav-container {
+    gap: 8px; /* Reduzido */
+  }
+
+  .nav-item {
+    padding: 8px 12px; /* Reduzido */
+    font-size: 0.8rem; /* Reduzido */
+  }
+
+  .terms-container {
+    margin: 30px auto; /* Reduzido */
+    padding: 0 15px 30px; /* Reduzido */
+  }
+
+  .terms-section {
+    padding: 30px 20px; /* Reduzido */
+  }
+
+  .section-number {
+    width: 45px; /* Reduzido */
+    height: 45px; /* Reduzido */
+    font-size: 1.1rem; /* Reduzido */
+  }
+
+  .section-title h2 {
+    font-size: 1.4rem; /* Reduzido */
+  }
+
+  .section-content p {
+    font-size: 0.9rem; /* Reduzido */
+  }
+
+  .subsection {
+    padding: 15px; /* Reduzido */
+  }
+
+  .subsection h3 {
+    font-size: 1rem; /* Reduzido */
+  }
+
+  .protected-items {
+    grid-template-columns: 1fr;
+  }
+
+  .acceptance-footer {
+    flex-direction: column;
+    padding: 25px 25px; /* Reduzido */
+    text-align: center;
+  }
+
+  .acceptance-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .btn-accept {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.6rem; /* Reduzido */
+  }
+
+  .hero-content p {
+    font-size: 0.85rem; /* Reduzido */
+  }
+
+  /* Removida a classe .last-updated */
+
+  .nav-item span {
+    display: none;
+  }
+
+  .nav-item {
+    padding: 8px; /* Reduzido */
+  }
+
+  .terms-section {
+    padding: 25px 15px; /* Reduzido */
+  }
+
+  .section-title h2 {
+    font-size: 1.2rem; /* Reduzido */
+  }
+
+  .info-card,
+  .warning-box,
+  .contact-card {
+    flex-direction: column;
+  }
+
+  .acceptance-text h3 {
+    font-size: 1.1rem;
+  }
+
+  .acceptance-text p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ========================================
+   ANIMAÇÕES E TRANSIÇÕES
+   ======================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* .terms-section { */
+    /* animation-delay: calc(var(--section-index, 0) * 0.1s); */ /* Removida animação */
+  /* } */
+
+  .nav-item,
+  .protected-item,
+  .feature-list li,
+  .liability-list li,
+  .contact-method {
+    transition: all 0.2s ease; /* Transição mais rápida e suave */
+  }
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Seleção de texto */
+::selection {
+  background: rgba(251, 202, 72, 0.2); /* Mais sutil */
+  color: #fff;
+}
+
+::-moz-selection {
+  background: rgba(251, 202, 72, 0.2); /* Mais sutil */
+  color: #fff;
+}
+
+/* Removido o estilo para .section-highlight e keyframe sectionPulse */
+

@@ -1,5 +1,5 @@
 const Gestor = require('../models/Gestor');
-const client = require('../config/mercadoPagoConfig');
+const client = require('../config/mercadopagoConfig');
 const { Payment } = require('mercadopago');
 
 // ✅ ADICIONE ISSO - fetch para Node.js

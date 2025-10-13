@@ -801,14 +801,19 @@ async function handleFinalSubmission(e) {
         }
 
         // REDIRECIONA PARA MERCADO PAGO
+       // REDIRECIONA PARA MERCADO PAGO
         console.log("➡️ Redirecionando para Mercado Pago...");
         
-        const checkoutUrl = paymentData.sandbox_init_point; // ⬅️ USA APENAS SANDBOX
+        // ✅ CORREÇÃO: Usa SEMPRE sandbox_init_point
+        const checkoutUrl = paymentData.sandbox_init_point || paymentData.init_point;
         if (!checkoutUrl) {
             throw new Error("URL de checkout não encontrada");
         }
         
-        window.location.href = checkoutUrl;
+        console.log("🌐 URL do Checkout:", checkoutUrl);
+        
+        // ✅ CORREÇÃO: Abre em nova aba ou redireciona
+        window.open(checkoutUrl, '_blank') || (window.location.href = checkoutUrl);
 
     } catch (error) {
         console.error("💥 ERRO NO FLUXO:", error);

@@ -2,7 +2,7 @@ const Gestor = require('../models/Gestor');
 const client = require('../config/mercadoPagoConfig');
 const { Payment } = require('mercadopago');
 
-// ✅ ADICIONE ISSO NO TOPO - fetch para Node.js
+// ✅ ADICIONE ISSO - fetch para Node.js
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 exports.webhookMercadoPago = async (req, res) => {
@@ -84,31 +84,61 @@ async function processarMerchantOrder(resourceUrl) {
       console.error('❌ ACCESS TOKEN não configurado!');
       return;
     }
+
+    console.log('🔑 Token sendo usado (primeiros 20 chars):', accessToken.substring(0, 20) + '...');
     
-    const response = await fetch(resourceUrl, {
+    // ✅ CORREÇÃO: Extrai o ID da URL
+    const merchantOrderId = resourceUrl.split('/').pop();
+    console.log('🔍 Merchant Order ID extraído:', merchantOrderId);
+    
+    // ✅ CORREÇÃO: URL direta da API
+    const apiUrl = `https://api.mercadolibre.com/merchant_orders/${merchantOrderId}`;
+    console.log('🌐 Fazendo request para:', apiUrl);
+    
+    const response = await fetch(apiUrl, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     });
     
+    console.log('📊 Status da resposta:', response.status);
+    console.log('📊 Headers da resposta:', JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2));
+    
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error('❌ Erro na API:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+      
+      // ✅ Tenta método alternativo se der erro 401
+      if (response.status === 401) {
+        console.log('🔄 Tentando método alternativo...');
+        await tentarMetodoAlternativo(merchantOrderId);
+      }
+      return;
     }
     
     const orderDetails = await response.json();
     
-    console.log('📊 Merchant Order Status:', orderDetails.status);
-    console.log('📊 Order Status:', orderDetails.order_status);
-    console.log('📊 Paid Amount:', orderDetails.paid_amount, '/', orderDetails.total_amount);
-    console.log('📊 Payments:', orderDetails.payments?.length || 0);
+    console.log('📊 Dados da Merchant Order:', {
+      id: orderDetails.id,
+      status: orderDetails.status,
+      order_status: orderDetails.order_status,
+      paid_amount: orderDetails.paid_amount,
+      total_amount: orderDetails.total_amount,
+      payments: orderDetails.payments?.length || 0
+    });
     
-    // ✅ CORREÇÃO: Verificação mais flexível para sandbox
+    // ✅ Processa pagamentos se existirem
     if (orderDetails.payments && orderDetails.payments.length > 0) {
-      console.log('💰 Processando pagamentos encontrados...');
+      console.log('💰 Pagamentos encontrados:', orderDetails.payments.length);
       
       for (const paymentInfo of orderDetails.payments) {
-        console.log('🔍 Verificando pagamento ID:', paymentInfo.id);
+        console.log('🔍 Processando pagamento ID:', paymentInfo.id);
         await processarPagamento(paymentInfo.id);
       }
     } else {
@@ -117,11 +147,45 @@ async function processarMerchantOrder(resourceUrl) {
     }
     
   } catch (error) {
-    console.error('❌ Erro ao processar merchant order:', error);
+    console.error('❌ Erro ao processar merchant order:', error.message);
+    console.error('🔍 Stack trace:', error.stack);
   }
 }
 
-// ✅ FUNÇÃO PARA ATIVAR GESTOR
+// ✅ MÉTODO ALTERNATIVO PARA ERRO 401
+async function tentarMetodoAlternativo(merchantOrderId) {
+  try {
+    console.log('🔄 Método alternativo para Merchant Order:', merchantOrderId);
+    
+    // Tenta buscar informações básicas de forma diferente
+    const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
+    
+    const response = await fetch(`https://api.mercadopago.com/merchant_orders/${merchantOrderId}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      const orderData = await response.json();
+      console.log('✅ Método alternativo funcionou!');
+      
+      if (orderData.payments && orderData.payments.length > 0) {
+        for (const paymentInfo of orderData.payments) {
+          await processarPagamento(paymentInfo.id);
+        }
+      }
+    } else {
+      console.log('❌ Método alternativo também falhou:', response.status);
+    }
+    
+  } catch (error) {
+    console.error('❌ Erro no método alternativo:', error);
+  }
+}
+
+// ✅ FUNÇÃO PARA ATIVAR GESTOR (MANTIDA)
 async function ativarGestor(gestorId) {
   try {
     if (!gestorId) {
@@ -178,4 +242,3 @@ async function ativarGestor(gestorId) {
     console.error('❌ Erro ao ativar gestor:', error);
   }
 }
-

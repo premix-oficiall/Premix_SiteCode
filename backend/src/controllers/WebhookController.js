@@ -1,6 +1,9 @@
 const Gestor = require('../models/Gestor');
-const client = require('../config/mercadoPagoConfig');
+const client = require('../config/mercadopagoConfig');
 const { Payment } = require('mercadopago');
+
+// ✅ ADICIONE ISSO NO TOPO - fetch para Node.js
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 exports.webhookMercadoPago = async (req, res) => {
   try {
@@ -75,9 +78,17 @@ async function processarMerchantOrder(resourceUrl) {
   try {
     console.log('📦 Buscando merchant order da URL:', resourceUrl);
     
+    // ✅ CORREÇÃO: Usa o access token do environment
+    const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
+    if (!accessToken) {
+      console.error('❌ ACCESS TOKEN não configurado!');
+      return;
+    }
+    
     const response = await fetch(resourceUrl, {
       headers: {
-        'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
       }
     });
     
@@ -88,30 +99,21 @@ async function processarMerchantOrder(resourceUrl) {
     const orderDetails = await response.json();
     
     console.log('📊 Merchant Order Status:', orderDetails.status);
-    console.log('📊 Order Status:', orderDetails.order_status); // ← IMPORTANTE!
+    console.log('📊 Order Status:', orderDetails.order_status);
     console.log('📊 Paid Amount:', orderDetails.paid_amount, '/', orderDetails.total_amount);
-    console.log('📊 Payments:', orderDetails.payments);
+    console.log('📊 Payments:', orderDetails.payments?.length || 0);
     
-    // ✅✅✅ CORREÇÃO: VERIFICAÇÃO COMPLETA ANTES DE ATIVAR
-    const pagamentoAprovado = verificarSePagamentoFoiAprovado(orderDetails);
-    
-    if (pagamentoAprovado) {
-      console.log('✅ PAGAMENTO VALIDADO - Processando pagamentos...');
+    // ✅ CORREÇÃO: Verificação mais flexível para sandbox
+    if (orderDetails.payments && orderDetails.payments.length > 0) {
+      console.log('💰 Processando pagamentos encontrados...');
       
-      // Processa cada pagamento da order
       for (const paymentInfo of orderDetails.payments) {
+        console.log('🔍 Verificando pagamento ID:', paymentInfo.id);
         await processarPagamento(paymentInfo.id);
       }
-      
     } else {
-      console.log('❌ PAGAMENTO NÃO CONFIRMADO - Nenhuma ação será tomada');
-      console.log('💡 Motivo:', {
-        status: orderDetails.status,
-        order_status: orderDetails.order_status,
-        paid_amount: orderDetails.paid_amount,
-        total_amount: orderDetails.total_amount,
-        payments_count: orderDetails.payments?.length || 0
-      });
+      console.log('❌ NENHUM PAGAMENTO ENCONTRADO - Order ainda não foi paga');
+      console.log('💡 Status atual:', orderDetails.order_status);
     }
     
   } catch (error) {
@@ -119,31 +121,7 @@ async function processarMerchantOrder(resourceUrl) {
   }
 }
 
-// ✅ NOVA FUNÇÃO: VERIFICA SE O PAGAMENTO REALMENTE FOI APROVADO
-function verificarSePagamentoFoiAprovado(orderDetails) {
-  // Verifica se há pagamentos na order
-  if (!orderDetails.payments || orderDetails.payments.length === 0) {
-    console.log('⚠️ Nenhum pagamento encontrado na order');
-    return false;
-  }
-  
-  // Verifica se o order_status é 'paid' (pago)
-  if (orderDetails.order_status !== 'paid') {
-    console.log('⚠️ Order status não é "paid":', orderDetails.order_status);
-    return false;
-  }
-  
-  // Verifica se o valor pago é >= valor total
-  if (orderDetails.paid_amount < orderDetails.total_amount) {
-    console.log('⚠️ Valor pago insuficiente:', orderDetails.paid_amount, '/', orderDetails.total_amount);
-    return false;
-  }
-  
-  console.log('✅ Todas as verificações passaram - Pagamento aprovado!');
-  return true;
-}
-
-// ✅ FUNÇÃO PARA ATIVAR GESTOR (MANTIDA)
+// ✅ FUNÇÃO PARA ATIVAR GESTOR
 async function ativarGestor(gestorId) {
   try {
     if (!gestorId) {

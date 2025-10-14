@@ -805,7 +805,7 @@ async function handleFinalSubmission(e) {
         console.log("➡️ Redirecionando para Mercado Pago...");
         
         // ✅ CORREÇÃO: Usa SEMPRE sandbox_init_point
-        const checkoutUrl = paymentData.sandbox_init_point || paymentData.init_point;
+        const checkoutUrl = paymentData.init_point || paymentData.init_point;
         if (!checkoutUrl) {
             throw new Error("URL de checkout não encontrada");
         }

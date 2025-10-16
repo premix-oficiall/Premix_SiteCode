@@ -272,7 +272,7 @@ body {
 .form-container {
   display: flex;
   justify-content: center;
-  padding: 40px 20px 60px;
+  padding: 40px 40px 60px;
 }
 
 .form-card {
@@ -281,7 +281,7 @@ body {
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   overflow: hidden;
   border: 1px solid rgba(251, 202, 72, 0.1);
   animation: slideInFromBottom 0.8s ease-out 0.4s both;
@@ -492,32 +492,34 @@ body {
 
 /* Pricing Grid */
 .pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 30px;
 }
 
 .pricing-card {
   position: relative;
-  transition: transform 0.3s ease;
+  /* NOVO: Garante que os 3 cards caibam em 100% da largura, descontando o espaço (30px * 2) */
+  width: calc(33.33% - 20px); 
+  min-height: 480px; /* garante que todos tenham a mesma altura visual */
+  background: rgba(26, 26, 26, 0.7);
+  border-radius: 16px;
+  border: 1px solid rgba(251, 202, 72, 0.1);
+  box-shadow: 0 0 20px rgba(251, 202, 72, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .pricing-card:hover {
   transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(251, 202, 72, 0.3);
 }
+ 
 
-.pricing-card.popular::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(135deg, #fbca48, #f39c12);
-  border-radius: 16px;
-  z-index: -1;
-}
 
 .pricing-card input[type="radio"] {
   position: absolute;
@@ -526,18 +528,17 @@ body {
 }
 
 .pricing-label {
-  display: block;
-  padding: 32px 24px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
   height: 100%;
-  position: relative;
-  overflow: hidden;
-}
+  /* Aumenta o padding do topo (primeiro valor) de 32px para 45px */
+  padding: 45px 24px 32px; 
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  }
 
 .pricing-label::before {
   content: '';
@@ -562,8 +563,8 @@ body {
 
 .pricing-card input[type="radio"]:checked + .pricing-label {
   border-color: #fbca48;
-  background: rgba(251, 202, 72, 0.05);
-  box-shadow: 0 0 30px rgba(251, 202, 72, 0.3);
+  background: rgba(251, 202, 72, 0.3);
+  box-shadow: 0 0 30px rgba(251, 202, 72, 0.7);
 }
 
 .plan-badge {
@@ -572,7 +573,7 @@ body {
   right: 16px;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  padding: 4px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
@@ -583,20 +584,25 @@ body {
 .popular-badge {
   background: linear-gradient(135deg, #fbca48, #f39c12);
   color: #000;
-}
+  /* Adiciona um pequeno recuo (padding) ao selo para afastar da borda */
+  padding: 6px 14px; 
+  }
 
 .plan-icon {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   background: linear-gradient(135deg, #fbca48, #f39c12);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Aumenta a margem superior e inferior para centralizar melhor */
+  margin-top: 25px; 
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 26px;
   color: #000;
-}
+  box-shadow: 0 0 10px rgba(251, 202, 72, 0.3);
+  }
 
 .plan-name {
   font-size: 1.4rem;
@@ -608,17 +614,18 @@ body {
 .plan-price {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   margin-bottom: 12px;
 }
 
 .currency {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #fbca48;
   font-weight: 600;
 }
 
 .amount {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #fbca48;
   margin: 0 4px;
@@ -626,26 +633,30 @@ body {
 
 .period {
   font-size: 1rem;
-  color: #888;
+  color: #aaa;
   font-weight: 500;
 }
 
 .plan-description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #ccc;
-  margin-bottom: 24px;
+  margin-bottom: 4px;
 }
 
 .plan-features {
   list-style: none;
   padding: 0;
-}
+  /* Remove a margem automática que empurra o bloco para o final do card */
+  margin-top: 10px; 
+  /* A propriedade 'margin-top: auto;' forçava o item a ficar no final. 
+      Ao usar um valor fixo, ele fica logo abaixo da descrição. */
+  }
 
 .plan-features li {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 5px;
   font-size: 14px;
   color: #e1e1e1;
 }
@@ -812,8 +823,13 @@ body {
   }
   
   .pricing-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 30px;
+  
   }
   
   .form-buttons {

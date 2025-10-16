@@ -7,6 +7,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 exports.webhookMercadoPago = async (req, res) => {
   try {
+    console.log('🎯🎯🎯 WEBHOOK INICIADO 🎯🎯🎯');
     console.log('🔄 WEBHOOK RECEBIDO - HEADERS:', req.headers);
     console.log('🔄 WEBHOOK RECEBIDO - BODY:', JSON.stringify(req.body, null, 2));
     
@@ -38,9 +39,11 @@ exports.webhookMercadoPago = async (req, res) => {
   }
 };
 
-// ✅ FUNÇÃO CORRIGIDA PARA PROCESSAR PAGAMENTOS
+// ✅✅✅ FUNÇÃO COM DEBUG SUPER DETALHADO
 async function processarPagamento(paymentData) {
   try {
+    console.log('💰💰💰 INICIANDO PROCESSAMENTO DE PAGAMENTO 💰💰💰');
+    
     let paymentId;
     
     if (typeof paymentData === 'object' && paymentData.id) {
@@ -51,47 +54,60 @@ async function processarPagamento(paymentData) {
       paymentId = paymentData;
     }
     
-    console.log('💰 Processando pagamento ID:', paymentId);
+    console.log('🔍 Payment ID recebido:', paymentId);
     
     const payment = new Payment(client);
     const paymentDetails = await payment.get({ id: paymentId });
     
-    console.log('📊 Status do pagamento:', paymentDetails.status);
-    console.log('📊 External Reference:', paymentDetails.external_reference);
+    console.log('📊📊📊 DETALHES COMPLETOS DO PAGAMENTO 📊📊📊');
+    console.log('ID:', paymentDetails.id);
+    console.log('Status:', paymentDetails.status);
+    console.log('Status Detail:', paymentDetails.status_detail);
+    console.log('External Reference:', paymentDetails.external_reference);
+    console.log('Transaction Amount:', paymentDetails.transaction_amount);
+    console.log('Date Approved:', paymentDetails.date_approved);
+    console.log('Payment Method:', paymentDetails.payment_method_id);
     
-    // ✅✅✅ CORREÇÃO CRÍTICA: Só ativa se APROVADO
+    // ✅✅✅ VERIFICAÇÃO CRÍTICA: Só ativa se APROVADO
     if (paymentDetails.status === 'approved') {
-      console.log('✅ PAGAMENTO APROVADO - Ativando gestor');
+      console.log('✅✅✅ PAGAMENTO APROVADO ENCONTRADO! ✅✅✅');
+      console.log('🔍 External Reference para ativar:', paymentDetails.external_reference);
+      
+      if (!paymentDetails.external_reference) {
+        console.log('❌❌❌ ERRO CRÍTICO: external_reference está VAZIO!');
+        return;
+      }
+      
       await ativarGestor(paymentDetails.external_reference);
     } else {
       console.log('❌ Pagamento NÃO aprovado. Status:', paymentDetails.status);
+      console.log('💡 Motivo:', paymentDetails.status_detail);
       console.log('⏸️ Gestor NÃO será ativado');
     }
     
   } catch (error) {
-    console.error('❌ Erro ao processar pagamento:', error);
+    console.error('❌❌❌ ERRO AO PROCESSAR PAGAMENTO:', error.message);
+    console.error('🔍 Stack trace:', error.stack);
   }
 }
 
 // ✅✅✅ FUNÇÃO CRITICAMENTE CORRIGIDA - MERCHANT ORDERS
 async function processarMerchantOrder(resourceUrl) {
   try {
+    console.log('🔄🔄🔄 INICIANDO PROCESSAMENTO MERCHANT ORDER 🔄🔄🔄');
     console.log('📦 Buscando merchant order da URL:', resourceUrl);
     
-    // ✅ CORREÇÃO: Usa o access token do environment
     const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
     if (!accessToken) {
       console.error('❌ ACCESS TOKEN não configurado!');
       return;
     }
 
-    console.log('🔑 Token sendo usado (primeiros 20 chars):', accessToken.substring(0, 20) + '...');
+    console.log('🔑 Token (20 chars):', accessToken.substring(0, 20) + '...');
     
-    // ✅ CORREÇÃO: Extrai o ID da URL
     const merchantOrderId = resourceUrl.split('/').pop();
-    console.log('🔍 Merchant Order ID extraído:', merchantOrderId);
+    console.log('🔍 Merchant Order ID:', merchantOrderId);
     
-    // ✅ CORREÇÃO: URL direta da API
     const apiUrl = `https://api.mercadolibre.com/merchant_orders/${merchantOrderId}`;
     console.log('🌐 Fazendo request para:', apiUrl);
     
@@ -104,46 +120,40 @@ async function processarMerchantOrder(resourceUrl) {
     });
     
     console.log('📊 Status da resposta:', response.status);
-    console.log('📊 Headers da resposta:', JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2));
     
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Erro na API:', {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorText
-      });
-      
-      // ✅ Tenta método alternativo se der erro 401
-      if (response.status === 401) {
-        console.log('🔄 Tentando método alternativo...');
-        await tentarMetodoAlternativo(merchantOrderId);
-      }
+      console.error('❌ Erro na API:', response.status, errorText);
       return;
     }
     
     const orderDetails = await response.json();
     
-    console.log('📊 Dados da Merchant Order:', {
-      id: orderDetails.id,
-      status: orderDetails.status,
-      order_status: orderDetails.order_status,
-      paid_amount: orderDetails.paid_amount,
-      total_amount: orderDetails.total_amount,
-      payments: orderDetails.payments?.length || 0
-    });
+    console.log('📊📊📊 DETALHES COMPLETOS DA ORDER 📊📊📊');
+    console.log('ID:', orderDetails.id);
+    console.log('Status:', orderDetails.status);
+    console.log('Order Status:', orderDetails.order_status);
+    console.log('Paid Amount:', orderDetails.paid_amount);
+    console.log('Total Amount:', orderDetails.total_amount);
+    console.log('Payments Count:', orderDetails.payments?.length || 0);
+    console.log('External Reference:', orderDetails.external_reference);
     
-    // ✅ Processa pagamentos se existirem
+    // ✅ VERIFICAÇÃO DETALHADA
     if (orderDetails.payments && orderDetails.payments.length > 0) {
-      console.log('💰 Pagamentos encontrados:', orderDetails.payments.length);
+      console.log('💰💰💰 PAGAMENTOS ENCONTRADOS 💰💰💰');
+      console.log('Quantidade de pagamentos:', orderDetails.payments.length);
       
       for (const paymentInfo of orderDetails.payments) {
-        console.log('🔍 Processando pagamento ID:', paymentInfo.id);
+        console.log('🔍🔍🔍 PROCESSANDO PAGAMENTO 🔍🔍🔍');
+        console.log('Payment ID:', paymentInfo.id);
+        console.log('Payment Status:', paymentInfo.status);
+        console.log('Payment Status Detail:', paymentInfo.status_detail);
+        
         await processarPagamento(paymentInfo.id);
       }
     } else {
-      console.log('❌ NENHUM PAGAMENTO ENCONTRADO - Order ainda não foi paga');
-      console.log('💡 Status atual:', orderDetails.order_status);
+      console.log('❌ NENHUM PAGAMENTO ENCONTRADO NA ORDER');
+      console.log('💡 Status atual da order:', orderDetails.order_status);
     }
     
   } catch (error) {
@@ -152,44 +162,14 @@ async function processarMerchantOrder(resourceUrl) {
   }
 }
 
-// ✅ MÉTODO ALTERNATIVO PARA ERRO 401
-async function tentarMetodoAlternativo(merchantOrderId) {
-  try {
-    console.log('🔄 Método alternativo para Merchant Order:', merchantOrderId);
-    
-    // Tenta buscar informações básicas de forma diferente
-    const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
-    
-    const response = await fetch(`https://api.mercadopago.com/merchant_orders/${merchantOrderId}`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (response.ok) {
-      const orderData = await response.json();
-      console.log('✅ Método alternativo funcionou!');
-      
-      if (orderData.payments && orderData.payments.length > 0) {
-        for (const paymentInfo of orderData.payments) {
-          await processarPagamento(paymentInfo.id);
-        }
-      }
-    } else {
-      console.log('❌ Método alternativo também falhou:', response.status);
-    }
-    
-  } catch (error) {
-    console.error('❌ Erro no método alternativo:', error);
-  }
-}
-
-// ✅ FUNÇÃO PARA ATIVAR GESTOR (MANTIDA)
+// ✅✅✅ FUNÇÃO PARA ATIVAR GESTOR COM DEBUG
 async function ativarGestor(gestorId) {
   try {
+    console.log('🎯🎯🎯 TENTANDO ATIVAR GESTOR 🎯🎯🎯');
+    console.log('🔍 Gestor ID recebido:', gestorId);
+    
     if (!gestorId) {
-      console.log('❌ ERRO: external_reference está vazio!');
+      console.log('❌❌❌ ERRO CRÍTICO: external_reference está VAZIO!');
       return;
     }
     
@@ -200,13 +180,15 @@ async function ativarGestor(gestorId) {
     console.log('🔍 Gestor encontrado no banco:', gestorExistente ? 'SIM' : 'NÃO');
     
     if (!gestorExistente) {
-      console.log('❌ Gestor não encontrado no banco com ID:', gestorId);
+      console.log('❌❌❌ Gestor não encontrado no banco com ID:', gestorId);
       return;
     }
     
     console.log('🔍 Status atual do gestor:', {
-      isActive: gestorExistente.isActive,
-      usuario: gestorExistente.usuario
+      _id: gestorExistente._id,
+      usuario: gestorExistente.usuario,
+      email: gestorExistente.email,
+      isActive: gestorExistente.isActive
     });
     
     // ⚠️ CORREÇÃO: Só atualiza se NÃO estiver ativo
@@ -214,6 +196,8 @@ async function ativarGestor(gestorId) {
       console.log('ℹ️ Gestor já está ativo - Nenhuma ação necessária');
       return;
     }
+    
+    console.log('🔄 Atualizando gestor para isActive: true...');
     
     const resultado = await Gestor.updateOne(
       { _id: gestorId },
@@ -233,13 +217,22 @@ async function ativarGestor(gestorId) {
     });
     
     if (resultado.modifiedCount > 0) {
-      console.log('🎉 Gestor ativado com sucesso!');
+      console.log('✅✅✅ GESTOR ATIVADO COM SUCESSO! ✅✅✅');
+      
+      // VERIFICAÇÃO FINAL
+      const gestorAtualizado = await Gestor.findById(gestorId);
+      console.log('🔍 Status FINAL do gestor:', {
+        _id: gestorAtualizado._id,
+        usuario: gestorAtualizado.usuario, 
+        isActive: gestorAtualizado.isActive,
+        dataAtivacao: gestorAtualizado.dataAtivacao
+      });
     } else {
-      console.log('⚠️ Nenhum documento foi modificado');
+      console.log('⚠️ Nenhum documento foi modificado - gestor já estava ativo?');
     }
     
   } catch (error) {
-    console.error('❌ Erro ao ativar gestor:', error);
+    console.error('❌❌❌ ERRO AO ATIVAR GESTOR:', error.message);
+    console.error('🔍 Stack trace:', error.stack);
   }
 }
-

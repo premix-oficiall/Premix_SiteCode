@@ -1,5 +1,5 @@
 const Gestor = require('../models/Gestor');
-const client = require('../config/mercadopagoConfig');
+const client = require('../config/mercadoPagoConfig');
 const { Payment } = require('mercadopago');
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -149,3 +149,4 @@ async function processarMerchantOrder(resourceUrl) {
     console.error('❌ Erro merchant order:', error);
   }
 }
+

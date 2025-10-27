@@ -233,7 +233,7 @@
         </div>
     </footer>
 
-   <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     // Navegação ativa
     const currentPath = window.location.pathname;
@@ -270,36 +270,32 @@ document.addEventListener("DOMContentLoaded", function() {
         downloadLinux.innerHTML = '<i class="fab fa-linux"></i> Download para Linux (Recomendado)';
     }
 
-    // ✅✅✅ URL DO MEDIAFIRE - DOWNLOAD DIRETO
-    const WINDOWS_DOWNLOAD_URL = 'https://download2268.mediafire.com/epr7in58iqkijdl/2x6q5b5c6d7e8f9/Premix_%284%29.zip';
+    // ✅✅✅ SEU LINK MEGA - DOWNLOAD DIRETO EM 1 CLIQUE!
+    const WINDOWS_DOWNLOAD_URL = 'https://mega.nz/file/2JkSwarK#P5bpHJdoB8H5qDk9zJT8vAGeUD5Ujjs12qTIa3WFOJQ';
 
-    // Eventos de download - AGORA FUNCIONA!
+    // Eventos de download - AGORA FUNCIONA EM 1 CLIQUE!
     if (downloadWindows) {
         downloadWindows.addEventListener("click", function(e) {
             e.preventDefault();
             
-            // ✅ DOWNLOAD DIRETO - 1 CLIQUE
+            // ✅ DOWNLOAD DIRETO - MEGA ABRE DIRETO
             window.open(WINDOWS_DOWNLOAD_URL, '_blank');
             
-            console.log("Download PremiX iniciado via MediaFire!");
+            console.log("Download PremiX iniciado via MEGA!");
         });
     }
 
     if (downloadLinux) {
         downloadLinux.addEventListener("click", function(e) {
             e.preventDefault();
-            alert('🐧 Versão Linux em desenvolvimento final!\nUse a versão Windows por enquanto.');
+            alert('🐧 Versão Linux em desenvolvimento! Use a versão Windows por enquanto.');
         });
     }
 
     if (ctaDownload) {
         ctaDownload.addEventListener("click", function(e) {
             e.preventDefault();
-            
-            // ✅ MESMA URL PARA O CTA
             window.open(WINDOWS_DOWNLOAD_URL, '_blank');
-            
-            console.log("Download automático iniciado!");
         });
     }
 

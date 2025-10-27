@@ -92,19 +92,32 @@ body {
 .btn-download.recommended::before {
     content: "Recomendado";
     position: absolute;
-    top: -1px;
-    right: -2px;
+    top: -8px;
+    right: -8px;
     background-color: #4CAF50;
     color: white;
     font-size: 0.7rem;
-    padding: 2px 8px;
+    padding: 4px 8px;
     border-radius: 4px;
     font-weight: 500;
+    z-index: 10;
 }
 
 .system-requirements {
     color: #888;
     font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.system-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+
+.system-requirements li {
+    margin: 2px 0;
+    font-size: 0.8rem;
 }
 
 /* Como Funciona */
@@ -272,11 +285,13 @@ body {
     display: flex;
     gap: 6px;
 }
+
 .preview-content h1 {
     line-height: 1.5;
     font-size: 0.70rem;
     color: red;
 }
+
 .control {
     width: 12px;
     height: 12px;
@@ -499,5 +514,12 @@ body {
     
     .features-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .btn-download.recommended::before {
+        top: -6px;
+        right: -6px;
+        font-size: 0.6rem;
+        padding: 3px 6px;
     }
 }

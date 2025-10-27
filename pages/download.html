@@ -233,7 +233,7 @@
         </div>
     </footer>
 
-    <script>
+   <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Navegação ativa
     const currentPath = window.location.pathname;
@@ -270,24 +270,25 @@ document.addEventListener("DOMContentLoaded", function() {
         downloadLinux.innerHTML = '<i class="fab fa-linux"></i> Download para Linux (Recomendado)';
     }
 
-    // ✅✅✅ LINKS ATUALIZADOS - COM SEU ID DO GOOGLE DRIVE
-    const WINDOWS_DOWNLOAD_URL = 'https://drive.google.com/file/d/1-jglxKvc6Zt-m8H0EO-s7r_U8CVGJQo_/view?usp=drive_link';
-    const LINUX_DOWNLOAD_URL = 'https://drive.google.com/file/d/1-jglxKvc6Zt-m8H0EO-s7r_U8CVGJQo_/view?usp=drive_link'; // Use o mesmo ou outro ID para Linux
+    // ✅✅✅ URL DO MEDIAFIRE - DOWNLOAD DIRETO
+    const WINDOWS_DOWNLOAD_URL = 'https://download2268.mediafire.com/epr7in58iqkijdl/2x6q5b5c6d7e8f9/Premix_%284%29.zip';
 
-    // Eventos de download
+    // Eventos de download - AGORA FUNCIONA!
     if (downloadWindows) {
         downloadWindows.addEventListener("click", function(e) {
             e.preventDefault();
+            
+            // ✅ DOWNLOAD DIRETO - 1 CLIQUE
             window.open(WINDOWS_DOWNLOAD_URL, '_blank');
-            console.log("Download Windows iniciado via Google Drive");
+            
+            console.log("Download PremiX iniciado via MediaFire!");
         });
     }
 
     if (downloadLinux) {
         downloadLinux.addEventListener("click", function(e) {
             e.preventDefault();
-            window.open(LINUX_DOWNLOAD_URL, '_blank');
-            console.log("Download Linux iniciado via Google Drive");
+            alert('🐧 Versão Linux em desenvolvimento final!\nUse a versão Windows por enquanto.');
         });
     }
 
@@ -295,17 +296,10 @@ document.addEventListener("DOMContentLoaded", function() {
         ctaDownload.addEventListener("click", function(e) {
             e.preventDefault();
             
-            let downloadUrl;
-            if (isWindows) {
-                downloadUrl = WINDOWS_DOWNLOAD_URL;
-            } else if (isLinux) {
-                downloadUrl = LINUX_DOWNLOAD_URL;
-            } else {
-                downloadUrl = WINDOWS_DOWNLOAD_URL; // Fallback
-            }
+            // ✅ MESMA URL PARA O CTA
+            window.open(WINDOWS_DOWNLOAD_URL, '_blank');
             
-            window.open(downloadUrl, '_blank');
-            console.log("Download automático iniciado");
+            console.log("Download automático iniciado!");
         });
     }
 

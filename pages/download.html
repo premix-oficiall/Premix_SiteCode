@@ -39,10 +39,17 @@
                         <i class="fab fa-windows"></i>
                         Download para Windows
                     </a>
+                    <a href="#" class="btn-download secondary" id="download-linux">
+                        <i class="fab fa-linux"></i>
+                        Download para Linux
+                    </a>
                 </div>
                 
                 <div class="system-requirements">
-                    <small>Requisitos: Windows 10</small>
+                    <small>
+                        <strong>Requisitos:</strong><br>
+                        Windows 10/11 (64-bit) | Linux Ubuntu 18.04+ | 4GB RAM | 2GB espaço livre
+                    </small>
                 </div>
             </div>
         </section>
@@ -228,84 +235,125 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-          // Navegação ativa (mantive sua lógica)
-          const currentPath = window.location.pathname;
-          const navLinks = document.querySelectorAll(".nav-tab");
-        
-          navLinks.forEach(link => {
-            let linkPath = link.getAttribute("href");
-            if (linkPath && linkPath.startsWith("../")) {
-              linkPath = linkPath.substring(3);
+            // Navegação ativa
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll(".nav-tab");
+
+            navLinks.forEach(link => {
+                let linkPath = link.getAttribute("href");
+                if (linkPath && linkPath.startsWith("../")) {
+                    linkPath = linkPath.substring(3);
+                }
+                if (linkPath && currentPath.includes(linkPath)) {
+                    link.classList.add("active-tab");
+                } else {
+                    link.classList.remove("active-tab");
+                }
+            });
+
+            // Botões de download
+            const downloadWindows = document.getElementById("download-windows");
+            const downloadLinux = document.getElementById("download-linux");
+            const ctaDownload = document.getElementById("cta-download");
+
+            // Detectar sistema operacional
+            const userAgent = navigator.userAgent || "";
+            const isWindows = /Windows/i.test(userAgent);
+            const isLinux = /Linux/i.test(userAgent);
+
+            // Destacar botão baseado no SO
+            if (isWindows && downloadWindows) {
+                downloadWindows.classList.add("recommended");
+                downloadWindows.innerHTML = '<i class="fab fa-windows"></i> Download para Windows (Recomendado)';
+            } else if (isLinux && downloadLinux) {
+                downloadLinux.classList.add("recommended");
+                downloadLinux.innerHTML = '<i class="fab fa-linux"></i> Download para Linux (Recomendado)';
             }
-            if (linkPath && currentPath.includes(linkPath)) {
-              link.classList.add("active-tab");
-            } else {
-              link.classList.remove("active-tab");
+
+            // Eventos de download
+            if (downloadWindows) {
+                downloadWindows.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    // Download para Windows
+                    const downloadUrl = "../downloads/premiX-setup.exe";
+                    
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'premiX-setup.exe';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    console.log("Download do PremiX para Windows iniciado!");
+                });
             }
-          });
-        
-          // Botões de download (pega elementos - podem ser null se removidos)
-          const downloadWindows = document.getElementById("download-windows");
-          const downloadMac = document.getElementById("download-mac"); // pode ser null
-          const ctaDownload = document.getElementById("cta-download");
-        
-          // Detectar sistema operacional (mais robusto)
-          const userAgent = navigator.userAgent || "";
-          const isMac = /Mac/i.test(userAgent);
-          const isWindows = /Windows/i.test(userAgent);
-        
-          // Destacar botão baseado no SO — só se o botão existir
-          if (isMac && downloadMac) {
-            downloadMac.classList.add("recommended");
-            downloadMac.innerHTML = '<i class="fab fa-apple"></i> Download para Mac (Recomendado)';
-          } else if (isWindows && downloadWindows) {
-            downloadWindows.classList.add("recommended");
-            downloadWindows.innerHTML = '<i class="fab fa-windows"></i> Download para Windows (Recomendado)';
-          }
-        
-          // Eventos de download — só adiciona se o elemento existir
-          if (downloadWindows) {
-            downloadWindows.addEventListener("click", function(e) {
-              e.preventDefault();
-              alert("Download para Windows iniciado!");
-              // window.location.href = "https://releases.premix.com/windows/premix-setup.exe";
-            });
-          }
-        
-          if (downloadMac) {
-            downloadMac.addEventListener("click", function(e) {
-              e.preventDefault();
-              alert("Download para Mac iniciado!");
-              // window.location.href = "https://releases.premix.com/mac/premix.dmg";
-            });
-          }
-        
-          if (ctaDownload) {
-            ctaDownload.addEventListener("click", function(e) {
-              e.preventDefault();
-              const hero = document.querySelector(".download-hero");
-              if (hero) hero.scrollIntoView({ behavior: "smooth" });
-            });
-          }
-        
-          // Animação dos cards ao scroll (mantive seu observer)
-          const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-          };
-        
-          const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("animate-in");
-              }
-            });
-          }, observerOptions);
-        
-          document.querySelectorAll(".feature-card").forEach(card => observer.observe(card));
-          document.querySelectorAll(".benefit-item").forEach(item => observer.observe(item));
+
+            if (downloadLinux) {
+                downloadLinux.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    // Download para Linux
+                    const downloadUrl = "../downloads/premiX-linux.tar.gz";
+                    
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'premiX-linux.tar.gz';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    console.log("Download do PremiX para Linux iniciado!");
+                });
+            }
+
+            if (ctaDownload) {
+                ctaDownload.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    // Detecta o SO e baixa o arquivo correto
+                    let downloadUrl, fileName;
+                    
+                    if (isWindows) {
+                        downloadUrl = "../downloads/premiX-setup.exe";
+                        fileName = 'premiX-setup.exe';
+                    } else if (isLinux) {
+                        downloadUrl = "../downloads/premiX-linux.tar.gz";
+                        fileName = 'premiX-linux.tar.gz';
+                    } else {
+                        // Fallback para Windows
+                        downloadUrl = "../downloads/premiX-setup.exe";
+                        fileName = 'premiX-setup.exe';
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    console.log("Download do PremiX iniciado!");
+                });
+            }
+
+            // Animação dos cards ao scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("animate-in");
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll(".feature-card").forEach(card => observer.observe(card));
+            document.querySelectorAll(".benefit-item").forEach(item => observer.observe(item));
         });
-        </script>
-        
+    </script>
 </body>
 </html>

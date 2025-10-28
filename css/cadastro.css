@@ -291,12 +291,11 @@ body {
 .form-header {
   background: linear-gradient(135deg, #fbca48 0%, #f39c12 100%);
   color: #000;
-  /* Diminuído o padding vertical (topo e base) para 25px, mantendo 40px nas laterais */
   padding: 25px 40px; 
   text-align: center;
   position: relative;
   overflow: hidden;
-  }
+}
 
 .form-header::before {
   content: '';
@@ -490,6 +489,98 @@ body {
   font-weight: 500;
 }
 
+/* ✅ TERMOS DE USO */
+.terms-section {
+  margin: 30px 0 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fbca48;
+  border-radius: 4px;
+  background: transparent;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.terms-checkbox input[type="checkbox"]:checked + label .checkmark {
+  background: #fbca48;
+  border-color: #fbca48;
+}
+
+.terms-checkbox input[type="checkbox"]:checked + label .checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.terms-checkbox label {
+  color: #e1e1e1;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.terms-link {
+  color: #fbca48;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.terms-link:hover {
+  color: #f39c12;
+  text-decoration: underline;
+}
+
+.terms-error {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 8px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.terms-error::before {
+  content: '⚠';
+  font-size: 14px;
+}
+
+.terms-checkbox input[type="checkbox"]:invalid ~ .terms-error {
+  display: flex;
+}
+
 /* Pricing Grid */
 .pricing-grid {
   display: flex;
@@ -502,9 +593,8 @@ body {
 
 .pricing-card {
   position: relative;
-  /* NOVO: Garante que os 3 cards caibam em 100% da largura, descontando o espaço (30px * 2) */
   width: calc(33.33% - 20px); 
-  min-height: 480px; /* garante que todos tenham a mesma altura visual */
+  min-height: 480px;
   background: rgba(26, 26, 26, 0.7);
   border-radius: 16px;
   border: 1px solid rgba(251, 202, 72, 0.1);
@@ -518,8 +608,6 @@ body {
   transform: translateY(-8px);
   box-shadow: 0 0 30px rgba(251, 202, 72, 0.3);
 }
- 
-
 
 .pricing-card input[type="radio"] {
   position: absolute;
@@ -534,11 +622,10 @@ body {
   justify-content: space-between;
   text-align: center;
   height: 100%;
-  /* Aumenta o padding do topo (primeiro valor) de 32px para 45px */
   padding: 45px 24px 32px; 
   border-radius: 16px;
   transition: all 0.3s ease;
-  }
+}
 
 .pricing-label::before {
   content: '';
@@ -584,9 +671,8 @@ body {
 .popular-badge {
   background: linear-gradient(135deg, #fbca48, #f39c12);
   color: #000;
-  /* Adiciona um pequeno recuo (padding) ao selo para afastar da borda */
   padding: 6px 14px; 
-  }
+}
 
 .plan-icon {
   width: 70px;
@@ -596,13 +682,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Aumenta a margem superior e inferior para centralizar melhor */
   margin-top: 25px; 
   margin-bottom: 20px;
   font-size: 26px;
   color: #000;
   box-shadow: 0 0 10px rgba(251, 202, 72, 0.3);
-  }
+}
 
 .plan-name {
   font-size: 1.4rem;
@@ -646,11 +731,8 @@ body {
 .plan-features {
   list-style: none;
   padding: 0;
-  /* Remove a margem automática que empurra o bloco para o final do card */
   margin-top: 10px; 
-  /* A propriedade 'margin-top: auto;' forçava o item a ficar no final. 
-      Ao usar um valor fixo, ele fica logo abaixo da descrição. */
-  }
+}
 
 .plan-features li {
   display: flex;
@@ -698,198 +780,4 @@ body {
   flex: 1;
 }
 
-.btn-next:hover, .btn-submit:hover, .btn-download:hover {
-  background: linear-gradient(135deg, #f39c12, #e67e22);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(251, 202, 72, 0.4);
-}
-
-.btn-prev, .btn-login {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  flex: 1;
-}
-
-.btn-prev:hover, .btn-login:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #fbca48;
-  transform: translateY(-2px);
-}
-
-/* Confirmation Content */
-.confirmation-content {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.success-icon {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, #4caf50, #45a049);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 30px;
-  font-size: 48px;
-  color: #fff;
-  animation: successPulse 2s ease-in-out infinite;
-}
-
-@keyframes successPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.confirmation-content h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.confirmation-content p {
-  font-size: 1.1rem;
-  color: #ccc;
-  margin-bottom: 40px;
-  line-height: 1.6;
-}
-
-.next-steps {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 30px;
-  margin-bottom: 40px;
-  text-align: left;
-}
-
-.next-steps h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #fbca48;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.next-steps ul {
-  list-style: none;
-  padding: 0;
-}
-
-.next-steps li {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-  font-size: 1rem;
-  color: #e1e1e1;
-}
-
-.next-steps i {
-  color: #fbca48;
-  font-size: 20px;
-  width: 24px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2.2rem;
-  }
-  
-  .hero-content p {
-    font-size: 1rem;
-  }
-  
-  .timeline-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .timeline-line {
-    display: none;
-  }
-  
-  .step-circle {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-  }
-  
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .pricing-grid {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-top: 30px;
-  
-  }
-  
-  .form-buttons {
-    flex-direction: column;
-  }
-  
-  .form-card {
-    margin: 0 10px;
-  }
-  
-  .form-header, .step-content {
-    padding: 30px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-content h1 {
-    font-size: 1.8rem;
-  }
-  
-  .form-header h2 {
-    font-size: 1.8rem;
-  }
-  
-  .step-circle {
-    width: 45px;
-    height: 45px;
-    font-size: 16px;
-  }
-  
-  .pricing-label {
-    padding: 24px 16px;
-  }
-  
-  .plan-name {
-    font-size: 1.2rem;
-  }
-  
-  .amount {
-    font-size: 2rem;
-  }
-}
-
-/* Estados de erro */
-.form-group input.error {
-  border-color: #f44336;
-  background: rgba(244, 67, 54, 0.1);
-  box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.2);
-}
-
-.error-message {
-  color: #f44336;
-  font-size: 12px;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.error-message::before {
-  content: '⚠';
-  font-size: 14px;
-}
+.btn-next:hover, .btn-sub

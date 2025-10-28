@@ -10,7 +10,9 @@ let contaExistente = null;
 // URL base da API
 const API_BASE_URL = "https://premix-sitecode1.onrender.com";
 
+// ================================
 // Inicialização da página
+// ================================
 document.addEventListener("DOMContentLoaded", function() {
     console.log("📄 Página de cadastro carregada");
     initializePage();
@@ -19,9 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
     addFormMasks();
 });
 
-// ================================
-// Inicialização e Navegação
-// ================================
 function initializePage() {
     console.log("🔧 Inicializando página...");
     updateTimeline();
@@ -42,11 +41,23 @@ function updateActiveNavigation() {
     });
 }
 
+// ================================
+// Event Listeners
+// ================================
 function setupEventListeners() {
     console.log("🎯 Configurando event listeners...");
     
     const step1Form = document.getElementById("step1Form");
     const step2Form = document.getElementById("step2Form");
+    const termsCheckbox = document.getElementById('aceitar-termos');
+    
+    // ✅ CORREÇÃO: Validar termos em tempo real
+    if (termsCheckbox) {
+        termsCheckbox.addEventListener('change', function() {
+            validateTerms();
+            atualizarBotaoProximo();
+        });
+    }
     
     if (step1Form) {
         step1Form.addEventListener("submit", function(e) {
@@ -76,10 +87,33 @@ function setupEventListeners() {
     const planInputs = document.querySelectorAll('input[name="plano"]');
     planInputs.forEach(input => input.addEventListener("change", handlePlanSelection));
     
-    // 👇 VALIDAÇÃO EM TEMPO REAL
+    // Validação em tempo real
     setupRealTimeValidation();
     
     console.log("✅ Event listeners configurados");
+}
+
+// ================================
+// Validação dos Termos de Uso (CRÍTICO)
+// ================================
+function validateTerms() {
+    const termsCheckbox = document.getElementById('aceitar-termos');
+    const termsError = document.getElementById('terms-error');
+    
+    if (!termsCheckbox.checked) {
+        if (termsError) {
+            termsError.textContent = 'Você deve aceitar os Termos de Uso para continuar';
+            termsError.style.display = 'flex';
+        }
+        termsCheckbox.setCustomValidity('Você deve aceitar os Termos de Uso');
+        return false;
+    } else {
+        if (termsError) {
+            termsError.style.display = 'none';
+        }
+        termsCheckbox.setCustomValidity('');
+        return true;
+    }
 }
 
 // ================================
@@ -152,7 +186,7 @@ function setupRealTimeValidation() {
 }
 
 // ================================
-// Conta Existente - Interface CORRIGIDA
+// Conta Existente - Interface
 // ================================
 function showContaExistente(gestor) {
     contaExistente = gestor;
@@ -161,13 +195,6 @@ function showContaExistente(gestor) {
     if (!mensagemDiv) {
         mensagemDiv = document.createElement("div");
         mensagemDiv.className = "conta-existente";
-        mensagemDiv.style.background = "#e8f5e8";
-        mensagemDiv.style.border = "1px solid #4caf50";
-        mensagemDiv.style.borderRadius = "8px";
-        mensagemDiv.style.padding = "15px";
-        mensagemDiv.style.margin = "15px 0";
-        mensagemDiv.style.color = "#2e7d32";
-        
         const form = document.getElementById("step1Form");
         form.appendChild(mensagemDiv);
     }
@@ -186,8 +213,7 @@ function showContaExistente(gestor) {
                 </p>
             </div>
             <div style="margin-left: 15px;">
-                <button type="button" id="btn-ir-para-pagamento" class="btn-continuar" 
-                        style="background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap;">
+                <button type="button" id="btn-ir-para-pagamento" class="btn-continuar">
                     <i class="fas fa-credit-card" style="margin-right: 5px;"></i>
                     Pagar Agora ›
                 </button>
@@ -195,11 +221,10 @@ function showContaExistente(gestor) {
         </div>
     `;
     
-    // ✅ CORREÇÃO: Adiciona evento para o botão de pagamento
+    // Evento para o botão de pagamento
     document.getElementById("btn-ir-para-pagamento").addEventListener("click", function() {
         console.log("💰 Indo diretamente para pagamento da conta existente...");
         
-        // Avança para a etapa de pagamento
         if (validateCurrentStep(1)) {
             console.log(`✅ Etapa 1 validada com sucesso (conta existente)`);
             markStepCompleted(1);
@@ -210,12 +235,12 @@ function showContaExistente(gestor) {
         }
     });
     
-    // ✅ CORREÇÃO: Permite avançar com o botão normal também
+    // Permite avançar com o botão normal também
     emailValido = true;
     usuarioValido = true;
     atualizarBotaoProximo();
     
-    console.log("✅ Conta existente configurada - botão próximo deve estar habilitado");
+    console.log("✅ Conta existente configurada");
 }
 
 function esconderContaExistente() {
@@ -226,47 +251,17 @@ function esconderContaExistente() {
     }
 }
 
-function usarContaExistente(gestor) {
-    console.log("🎯 Usando conta existente:", gestor);
-    
-    document.getElementById("nome_chefe").value = gestor.usuario;
-    document.getElementById("email").value = gestor.email;
-    document.getElementById("nome_chefe").disabled = true;
-    document.getElementById("email").disabled = true;
-    
-    const mensagemDiv = document.querySelector(".conta-existente");
-    if (mensagemDiv) {
-        mensagemDiv.innerHTML = `
-            <div style="display: flex; align-items: center;">
-                <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
-                <div>
-                    <strong>Conta selecionada!</strong>
-                    <p style="margin: 5px 0 0 0; font-size: 14px;">
-                        Você está usando a conta: <strong>${gestor.usuario}</strong> (${gestor.email})
-                    </p>
-                </div>
-            </div>
-        `;
-    }
-    
-    // ✅ CORREÇÃO: Habilita o botão próximo
-    setTimeout(() => {
-        emailValido = true;
-        usuarioValido = true;
-        atualizarBotaoProximo();
-    }, 1000);
-}
-
 function atualizarBotaoProximo() {
     const btnNext = document.querySelector(".btn-next");
     if (btnNext) {
-        // ✅ CORREÇÃO: Permite avançar se tem conta existente
-        const podeAvançar = (emailValido && usuarioValido) || contaExistente;
+        const termosAceitos = document.getElementById('aceitar-termos')?.checked || false;
+        const podeAvançar = ((emailValido && usuarioValido && termosAceitos) || contaExistente);
         btnNext.disabled = !podeAvançar;
         
         console.log("🔍 Estado do botão próximo:", {
             emailValido,
             usuarioValido, 
+            termosAceitos,
             contaExistente: !!contaExistente,
             podeAvançar,
             btnDisabled: btnNext.disabled
@@ -307,13 +302,12 @@ function animateStepTransition() {
     }
 }
 
-function setupAnimations() {}
+function setupAnimations() {
+    // Animações adicionais podem ser adicionadas aqui
+}
 
-function animatePageElements() {}
-
-function animateSuccess() {
-    const successIcon = document.querySelector(".success-icon");
-    if (successIcon) successIcon.classList.add("animate__animated", "animate__bounceIn");
+function animatePageElements() {
+    // Animações de elementos da página
 }
 
 // ================================
@@ -322,7 +316,6 @@ function animateSuccess() {
 function nextStep(step) {
     if (isLoading) return;
     
-    // ✅ CORREÇÃO: Se tem conta existente, validação é automática
     if (step === 1 && contaExistente) {
         console.log("✅ Conta existente selecionada - validação automática");
         markStepCompleted(step);
@@ -390,7 +383,7 @@ function markStepCompleted(step) {
 }
 
 // ================================
-// Validação - CORRIGIDA
+// Validação Principal
 // ================================
 function validateCurrentStep(step) {
     console.log(`🔍 Validando etapa ${step}...`);
@@ -400,7 +393,6 @@ function validateCurrentStep(step) {
         return false;
     }
     
-    // ✅ CORREÇÃO: Se tem conta existente, validação é automática
     if (step === 1 && contaExistente) {
         console.log("✅ Conta existente selecionada - validação automática");
         return true;
@@ -409,7 +401,16 @@ function validateCurrentStep(step) {
     const inputs = form.querySelectorAll("input[required]");
     let isValid = true;
 
+    if (step === 1) {
+        if (!validateTerms()) {
+            isValid = false;
+            console.log(`❌ Termos de uso não aceitos`);
+        }
+    }
+
     inputs.forEach(input => {
+        if (input.id === 'aceitar-termos') return;
+        
         if (!input.value.trim()) {
             isValid = false;
             showFieldError(input.id, "Este campo é obrigatório");
@@ -728,7 +729,7 @@ async function criarPagamentoExistente(gestorId, plano) {
 }
 
 // ================================
-// Submissão Final - CORRIGIDA
+// Submissão Final
 // ================================
 async function handleFinalSubmission(e) {
     e.preventDefault();
@@ -755,7 +756,6 @@ async function handleFinalSubmission(e) {
         let paymentData;
 
         if (contaExistente) {
-            // FLUXO CONTA EXISTENTE
             console.log("🔄 Usando conta existente para pagamento...");
             gestorId = contaExistente._id;
             
@@ -763,7 +763,6 @@ async function handleFinalSubmission(e) {
             console.log("✅ Pagamento para conta existente criado:", paymentData);
             
         } else {
-            // FLUXO NORMAL - NOVA CONTA
             console.log("🔄 Criando nova conta + pagamento...");
             const formData = collectFormData();
             if (!formData) {
@@ -781,7 +780,6 @@ async function handleFinalSubmission(e) {
             gestorId = gestorResult.gestor?._id;
             if (!gestorId) throw new Error("ID do gestor não retornado");
 
-            // CORREÇÃO CRÍTICA: paymentResponse estava indefinido
             const paymentResponse = await fetch(`${API_BASE_URL}/api/payments/create-preference`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -800,19 +798,15 @@ async function handleFinalSubmission(e) {
             console.log("✅ Pagamento para nova conta criado:", paymentData);
         }
 
-        // REDIRECIONA PARA MERCADO PAGO
-       // REDIRECIONA PARA MERCADO PAGO
         console.log("➡️ Redirecionando para Mercado Pago...");
         
-        // ✅ CORREÇÃO: Usa SEMPRE sandbox_init_point
-        const checkoutUrl = paymentData.init_point || paymentData.init_point;
+        const checkoutUrl = paymentData.init_point || paymentData.sandbox_init_point;
         if (!checkoutUrl) {
             throw new Error("URL de checkout não encontrada");
         }
         
         console.log("🌐 URL do Checkout:", checkoutUrl);
         
-        // ✅ CORREÇÃO: Abre em nova aba ou redireciona
         window.open(checkoutUrl, '_blank') || (window.location.href = checkoutUrl);
 
     } catch (error) {
@@ -893,7 +887,7 @@ function showRegistrationError(message) {
 }
 
 // ================================
-// Extra
+// Setup de Validação
 // ================================
 function setupFormValidation() {
     console.log("✅ Validação de formulário configurada");

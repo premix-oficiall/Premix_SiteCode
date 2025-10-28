@@ -138,15 +138,30 @@
             <div class="input-highlight"></div>
           </div>
 
+          <!-- ✅ TERMOS DE USO ADICIONADOS -->
+          <div class="terms-section">
+            <div class="terms-checkbox">
+              <input type="checkbox" id="aceitar-termos" name="aceitar-termos" required>
+              <label for="aceitar-termos">
+                <span class="checkmark"></span>
+                Eu li e concordo com os 
+                <a href="terms.html" target="_blank" class="terms-link">Termos de Uso</a> 
+                e 
+                <a href="privacy.html" target="_blank" class="terms-link">Política de Privacidade</a>
+                da PremiX
+              </label>
+            </div>
+            <div class="terms-error" id="terms-error"></div>
+          </div>
+
           <div class="form-buttons">
             <button type="submit" class="btn-next">
               <span>Próximo</span>
               <i class="fas fa-arrow-right"></i>
-              </button>
+            </button>
           </div>
         </form>
       </div>
-    
 
       <!-- Step 2: Plan Selection -->
       <div class="step-content" id="step-2-content">

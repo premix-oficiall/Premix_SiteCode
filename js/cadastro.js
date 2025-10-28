@@ -1033,4 +1033,84 @@ function showRegistrationError(message) {
     
     setTimeout(() => { 
         if (errorDiv) {
-            errorDiv.style.display = "none
+            errorDiv.style.display = "none";
+            console.log("🧹 Erro removido da tela");
+        }
+    }, 7000);
+}
+
+// ================================
+// Setup de Validação
+// ================================
+function setupFormValidation() {
+    console.log("✅ Validação de formulário configurada");
+}
+
+// Teste rápido da API
+console.log("🧪 Para testar a API, execute no console: testarAPI()");
+
+function testarAPI() {
+    console.log("🧪 Testando API diretamente...");
+    fetch(`${API_BASE_URL}/api/Gestor/register`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            usuario: "testeconsole",
+            senha: "123456",
+            cpf: "11122233344",
+            email: "teste@console.com"
+        })
+    })
+    .then(r => r.json())
+    .then(result => console.log("✅ Teste API:", result))
+    .catch(error => console.error("❌ Teste API:", error));
+}
+
+// Função para testar a API de pagamentos
+async function testarPagamento() {
+    console.log("🧪 Testando API de pagamentos...");
+    
+    try {
+        const testData = {
+            gestorId: "teste123",
+            plano: "unitario",
+            usuario: "usuarioteste",
+            email: "teste@pagamento.com"
+        };
+
+        const response = await fetch(`${API_BASE_URL}/api/payments/create-preference`, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(testData)
+        });
+
+        console.log("📥 Status do teste:", response.status);
+        console.log("📨 Headers:", response.headers);
+        
+        const result = await response.json();
+        console.log("✅ Resposta do teste:", result);
+        
+    } catch (error) {
+        console.error("❌ Erro no teste:", error);
+    }
+}
+
+// Função de debug para verificar o estado
+function debugEstado() {
+    const termos = document.getElementById('aceitar-termos');
+    console.log('=== DEBUG ESTADO ===');
+    console.log('Email válido:', emailValido);
+    console.log('Usuário válido:', usuarioValido);
+    console.log('Senha válida:', senhaValida);
+    console.log('Confirmação senha válida:', confirmacaoSenhaValida);
+    console.log('CPF válido:', cpfValido);
+    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox não encontrado');
+    console.log('Todos campos preenchidos:', emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido);
+    console.log('Conta existente:', !!contaExistente);
+    console.log('Pode avançar:', (emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido && termos?.checked) || contaExistente);
+}
+
+// Execute no console: testarPagamento() para testar a API de pagamentos

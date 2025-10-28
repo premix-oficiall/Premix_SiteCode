@@ -490,6 +490,7 @@ body {
 }
 
 /* ✅ TERMOS DE USO CORRIGIDOS */
+/* ✅ TERMOS DE USO CORRIGIDOS - CSS FUNCIONAL */
 .terms-section {
   margin: 30px 0 20px;
   padding: 20px;
@@ -502,7 +503,6 @@ body {
 .terms-checkbox {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
   cursor: pointer;
 }
 
@@ -519,15 +519,16 @@ body {
   position: relative;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  margin-right: 12px;
   margin-top: 2px;
 }
 
-.terms-checkbox input[type="checkbox"]:checked + .checkmark {
+.terms-checkbox input[type="checkbox"]:checked ~ .checkmark {
   background: #fbca48;
   border-color: #fbca48;
 }
 
-.terms-checkbox input[type="checkbox"]:checked + .checkmark::after {
+.terms-checkbox input[type="checkbox"]:checked ~ .checkmark::after {
   content: '✓';
   position: absolute;
   top: 50%;
@@ -542,10 +543,10 @@ body {
   color: #e1e1e1;
   font-size: 14px;
   line-height: 1.5;
-  cursor: pointer;
   font-weight: 400;
   text-transform: none;
   letter-spacing: normal;
+  flex: 1;
 }
 
 .terms-link {
@@ -578,8 +579,15 @@ body {
   font-size: 14px;
 }
 
-.terms-checkbox input[type="checkbox"]:invalid ~ .terms-error {
-  display: flex;
+/* Efeito hover na área toda */
+.terms-checkbox:hover .checkmark {
+  border-color: #f39c12;
+  transform: scale(1.05);
+}
+
+.terms-section:hover {
+  border-color: rgba(251, 202, 72, 0.3);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 /* Mensagens de erro */

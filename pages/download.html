@@ -261,6 +261,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const isWindows = /Windows/i.test(userAgent);
     const isLinux = /Linux/i.test(userAgent);
 
+    // ✅✅✅ LINKS MEGA - WINDOWS E LINUX!
+    const WINDOWS_DOWNLOAD_URL = 'https://mega.nz/file/2JkSwarK#P5bpHJdoB8H5qDk9zJT8vAGeUD5Ujjs12qTIa3WFOJQ';
+    const LINUX_DOWNLOAD_URL = 'https://mega.nz/file/mMEVxDZL#6Oxr04I7MI8JPyTBb67b3is_hdBnqlzuxVQgAlBt6mU';
+
     // Destacar botão baseado no SO
     if (isWindows && downloadWindows) {
         downloadWindows.classList.add("recommended");
@@ -270,32 +274,39 @@ document.addEventListener("DOMContentLoaded", function() {
         downloadLinux.innerHTML = '<i class="fab fa-linux"></i> Download para Linux (Recomendado)';
     }
 
-    // ✅✅✅ SEU LINK MEGA - DOWNLOAD DIRETO EM 1 CLIQUE!
-    const WINDOWS_DOWNLOAD_URL = 'https://mega.nz/file/2JkSwarK#P5bpHJdoB8H5qDk9zJT8vAGeUD5Ujjs12qTIa3WFOJQ';
-
-    // Eventos de download - AGORA FUNCIONA EM 1 CLIQUE!
+    // Eventos de download
     if (downloadWindows) {
         downloadWindows.addEventListener("click", function(e) {
             e.preventDefault();
-            
-            // ✅ DOWNLOAD DIRETO - MEGA ABRE DIRETO
             window.open(WINDOWS_DOWNLOAD_URL, '_blank');
-            
-            console.log("Download PremiX iniciado via MEGA!");
+            console.log("Download PremiX Windows iniciado!");
         });
     }
 
     if (downloadLinux) {
         downloadLinux.addEventListener("click", function(e) {
             e.preventDefault();
-             const LINUX_DOWNLOAD_URL = 'https://mega.nz/file/mMEVxDZL#6Oxr04I7MI8JPyTBb67b3is_hdBnqlzuxVQgAlBt6mU';
+            window.open(LINUX_DOWNLOAD_URL, '_blank');
+            console.log("Download PremiX Linux iniciado!");
         });
     }
 
     if (ctaDownload) {
         ctaDownload.addEventListener("click", function(e) {
             e.preventDefault();
-            window.open(WINDOWS_DOWNLOAD_URL, '_blank');
+            
+            // ✅ DOWNLOAD AUTOMÁTICO BASEADO NO SO
+            let downloadUrl;
+            if (isWindows) {
+                downloadUrl = WINDOWS_DOWNLOAD_URL;
+            } else if (isLinux) {
+                downloadUrl = LINUX_DOWNLOAD_URL;
+            } else {
+                downloadUrl = WINDOWS_DOWNLOAD_URL; // Fallback
+            }
+            
+            window.open(downloadUrl, '_blank');
+            console.log("Download automático iniciado!");
         });
     }
 

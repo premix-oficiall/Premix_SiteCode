@@ -415,7 +415,7 @@ function animatePageElements() {
 }
 
 // ================================
-// Controle de Etapas
+// Controle de Etapas 
 // ================================
 function nextStep(step) {
     if (isLoading) return;
@@ -845,6 +845,9 @@ async function criarPagamentoExistente(gestorId, plano) {
 // ================================
 // Submissão Final (CORRIGIDA)
 // ================================
+// ================================
+// Submissão Final (CORRIGIDA COM PLANOS CORRETOS)
+// ================================
 async function handleFinalSubmission(e) {
     e.preventDefault();
     console.log("🎯 Iniciando fluxo de pagamento...");
@@ -868,6 +871,21 @@ async function handleFinalSubmission(e) {
 
         console.log("📋 Plano selecionado:", plano);
 
+        // ✅ CORREÇÃO: Definir preços dos planos CORRETOS
+        const precosPlanos = {
+            'unitario': 15.00,
+            'premium': 70.00,
+            'enterprise': 250.00
+        };
+
+        const unit_price = precosPlanos[plano];
+        
+        if (!unit_price) {
+            throw new Error(`Preço não definido para o plano: ${plano}`);
+        }
+
+        console.log("💰 Preço do plano:", unit_price);
+
         let gestorId;
         let paymentData;
 
@@ -875,7 +893,7 @@ async function handleFinalSubmission(e) {
             console.log("🔄 Usando conta existente para pagamento...");
             gestorId = contaExistente._id;
             
-            paymentData = await criarPagamentoExistente(gestorId, plano);
+            paymentData = await criarPagamentoExistente(gestorId, plano, unit_price);
             console.log("✅ Pagamento para conta existente criado:", paymentData);
             
         } else {
@@ -903,7 +921,7 @@ async function handleFinalSubmission(e) {
 
             console.log("💰 Criando preferência de pagamento para gestor:", gestorId);
 
-            // ✅ CORREÇÃO: Endpoint e dados corrigidos
+            // ✅ CORREÇÃO: Incluir unit_price no request
             const paymentResponse = await fetch(`${API_BASE_URL}/api/payments/create-preference`, {
                 method: "POST",
                 headers: { 
@@ -913,6 +931,7 @@ async function handleFinalSubmission(e) {
                 body: JSON.stringify({
                     gestorId: gestorId,
                     plano: plano,
+                    unit_price: unit_price,
                     // ✅ Adicionando dados adicionais que o servidor pode precisar
                     usuario: formData.usuario,
                     email: formData.email

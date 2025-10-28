@@ -813,19 +813,27 @@ async function criarPagamentoExistente(gestorId, plano) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/payments/create-existing`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
             body: JSON.stringify({
                 gestorId: gestorId,
                 plano: plano
             })
         });
 
-        const result = await response.json();
-        
-        if (!result.success) {
-            throw new Error(result.error || "Erro ao criar pagamento");
+        console.log("📥 Status do pagamento existente:", response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("❌ Erro no pagamento existente:", errorText);
+            throw new Error(`Erro do servidor: ${response.status} - ${errorText}`);
         }
 
+        const result = await response.json();
+        console.log("✅ Pagamento existente criado:", result);
+        
         return result;
         
     } catch (error) {
@@ -835,7 +843,7 @@ async function criarPagamentoExistente(gestorId, plano) {
 }
 
 // ================================
-// Submissão Final
+// Submissão Final (CORRIGIDA)
 // ================================
 async function handleFinalSubmission(e) {
     e.preventDefault();
@@ -858,6 +866,8 @@ async function handleFinalSubmission(e) {
         if (!planoInput) throw new Error("Nenhum plano selecionado");
         const plano = planoInput.value;
 
+        console.log("📋 Plano selecionado:", plano);
+
         let gestorId;
         let paymentData;
 
@@ -875,6 +885,7 @@ async function handleFinalSubmission(e) {
                 throw new Error("Erro ao coletar dados do formulário");
             }
             
+            // Registrar gestor
             const gestorResult = await registerGestor({
                 usuario: formData.usuario,
                 email: formData.email,
@@ -883,22 +894,44 @@ async function handleFinalSubmission(e) {
             });
 
             console.log("✅ Nova conta registrada:", gestorResult);
-            gestorId = gestorResult.gestor?._id;
-            if (!gestorId) throw new Error("ID do gestor não retornado");
+            gestorId = gestorResult.gestor?._id || gestorResult._id;
+            
+            if (!gestorId) {
+                console.error("❌ ID do gestor não encontrado na resposta:", gestorResult);
+                throw new Error("ID do gestor não retornado pelo servidor");
+            }
 
+            console.log("💰 Criando preferência de pagamento para gestor:", gestorId);
+
+            // ✅ CORREÇÃO: Endpoint e dados corrigidos
             const paymentResponse = await fetch(`${API_BASE_URL}/api/payments/create-preference`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 body: JSON.stringify({
                     gestorId: gestorId,
-                    plano: plano
+                    plano: plano,
+                    // ✅ Adicionando dados adicionais que o servidor pode precisar
+                    usuario: formData.usuario,
+                    email: formData.email
                 })
             });
 
+            console.log("📥 Status do pagamento:", paymentResponse.status);
+
+            if (!paymentResponse.ok) {
+                const errorText = await paymentResponse.text();
+                console.error("❌ Erro na resposta do pagamento:", errorText);
+                throw new Error(`Erro do servidor: ${paymentResponse.status} - ${errorText}`);
+            }
+
             paymentData = await paymentResponse.json();
+            console.log("✅ Resposta do pagamento:", paymentData);
             
-            if (!paymentData.success) {
-                throw new Error(paymentData.error || "Erro ao criar pagamento");
+            if (!paymentData.success && !paymentData.init_point && !paymentData.sandbox_init_point) {
+                throw new Error(paymentData.error || "Erro ao criar pagamento - estrutura inválida");
             }
 
             console.log("✅ Pagamento para nova conta criado:", paymentData);
@@ -906,18 +939,32 @@ async function handleFinalSubmission(e) {
 
         console.log("➡️ Redirecionando para Mercado Pago...");
         
-        const checkoutUrl = paymentData.init_point || paymentData.sandbox_init_point;
+        // ✅ CORREÇÃO: Múltiplas formas de obter a URL
+        const checkoutUrl = paymentData.init_point || 
+                           paymentData.sandbox_init_point || 
+                           paymentData.url ||
+                           (paymentData.response && paymentData.response.init_point);
+        
         if (!checkoutUrl) {
-            throw new Error("URL de checkout não encontrada");
+            console.error("❌ URL de checkout não encontrada. Dados completos:", paymentData);
+            throw new Error("URL de pagamento não disponível. Tente novamente.");
         }
         
         console.log("🌐 URL do Checkout:", checkoutUrl);
         
-        window.open(checkoutUrl, '_blank') || (window.location.href = checkoutUrl);
+        // ✅ CORREÇÃO: Redirecionamento mais robusto
+        setTimeout(() => {
+            try {
+                window.location.href = checkoutUrl;
+            } catch (redirectError) {
+                console.error("❌ Erro no redirecionamento:", redirectError);
+                window.open(checkoutUrl, '_blank');
+            }
+        }, 1000);
 
     } catch (error) {
         console.error("💥 ERRO NO FLUXO:", error);
-        showRegistrationError(error.message);
+        showRegistrationError(error.message || "Erro ao processar pagamento. Tente novamente.");
         setLoadingState(false);
     }
 }
@@ -986,50 +1033,4 @@ function showRegistrationError(message) {
     
     setTimeout(() => { 
         if (errorDiv) {
-            errorDiv.style.display = "none";
-            console.log("🧹 Erro removido da tela");
-        }
-    }, 7000);
-}
-
-// ================================
-// Setup de Validação
-// ================================
-function setupFormValidation() {
-    console.log("✅ Validação de formulário configurada");
-}
-
-// Teste rápido da API
-console.log("🧪 Para testar a API, execute no console: testarAPI()");
-
-function testarAPI() {
-    console.log("🧪 Testando API diretamente...");
-    fetch(`${API_BASE_URL}/api/Gestor/register`,{
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            usuario: "testeconsole",
-            senha: "123456",
-            cpf: "11122233344",
-            email: "teste@console.com"
-        })
-    })
-    .then(r => r.json())
-    .then(result => console.log("✅ Teste API:", result))
-    .catch(error => console.error("❌ Teste API:", error));
-}
-
-// Função de debug para verificar o estado
-function debugEstado() {
-    const termos = document.getElementById('aceitar-termos');
-    console.log('=== DEBUG ESTADO ===');
-    console.log('Email válido:', emailValido);
-    console.log('Usuário válido:', usuarioValido);
-    console.log('Senha válida:', senhaValida);
-    console.log('Confirmação senha válida:', confirmacaoSenhaValida);
-    console.log('CPF válido:', cpfValido);
-    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox não encontrado');
-    console.log('Todos campos preenchidos:', emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido);
-    console.log('Conta existente:', !!contaExistente);
-    console.log('Pode avançar:', (emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido && termos?.checked) || contaExistente);
-}
+            errorDiv.style.display = "none

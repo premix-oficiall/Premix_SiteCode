@@ -54,6 +54,7 @@ function setupEventListeners() {
     // ✅ CORREÇÃO: Validar termos em tempo real
     if (termsCheckbox) {
         termsCheckbox.addEventListener('change', function() {
+            console.log("📝 Checkbox alterado:", this.checked);
             validateTerms();
             atualizarBotaoProximo();
         });
@@ -100,6 +101,8 @@ function validateTerms() {
     const termsCheckbox = document.getElementById('aceitar-termos');
     const termsError = document.getElementById('terms-error');
     
+    if (!termsCheckbox) return false;
+    
     if (!termsCheckbox.checked) {
         if (termsError) {
             termsError.textContent = 'Você deve aceitar os Termos de Uso para continuar';
@@ -113,6 +116,29 @@ function validateTerms() {
         }
         termsCheckbox.setCustomValidity('');
         return true;
+    }
+}
+
+// ================================
+// Atualização do Botão Próximo (CORRIGIDA)
+// ================================
+function atualizarBotaoProximo() {
+    const btnNext = document.querySelector(".btn-next");
+    if (btnNext) {
+        const termosCheckbox = document.getElementById('aceitar-termos');
+        const termosAceitos = termosCheckbox ? termosCheckbox.checked : false;
+        const podeAvançar = ((emailValido && usuarioValido && termosAceitos) || contaExistente);
+        
+        btnNext.disabled = !podeAvançar;
+        
+        console.log("🔍 Estado do botão próximo:", {
+            emailValido,
+            usuarioValido, 
+            termosAceitos,
+            contaExistente: !!contaExistente,
+            podeAvançar,
+            btnDisabled: btnNext.disabled
+        });
     }
 }
 
@@ -251,24 +277,6 @@ function esconderContaExistente() {
     }
 }
 
-function atualizarBotaoProximo() {
-    const btnNext = document.querySelector(".btn-next");
-    if (btnNext) {
-        const termosAceitos = document.getElementById('aceitar-termos')?.checked || false;
-        const podeAvançar = ((emailValido && usuarioValido && termosAceitos) || contaExistente);
-        btnNext.disabled = !podeAvançar;
-        
-        console.log("🔍 Estado do botão próximo:", {
-            emailValido,
-            usuarioValido, 
-            termosAceitos,
-            contaExistente: !!contaExistente,
-            podeAvançar,
-            btnDisabled: btnNext.disabled
-        });
-    }
-}
-
 // ================================
 // Efeitos visuais / animações
 // ================================
@@ -383,7 +391,7 @@ function markStepCompleted(step) {
 }
 
 // ================================
-// Validação Principal
+// Validação Principal (CORRIGIDA)
 // ================================
 function validateCurrentStep(step) {
     console.log(`🔍 Validando etapa ${step}...`);
@@ -401,8 +409,10 @@ function validateCurrentStep(step) {
     const inputs = form.querySelectorAll("input[required]");
     let isValid = true;
 
+    // ✅ CORREÇÃO: Validar termos primeiro
     if (step === 1) {
-        if (!validateTerms()) {
+        const termosValidos = validateTerms();
+        if (!termosValidos) {
             isValid = false;
             console.log(`❌ Termos de uso não aceitos`);
         }
@@ -911,4 +921,15 @@ function testarAPI() {
     .then(r => r.json())
     .then(result => console.log("✅ Teste API:", result))
     .catch(error => console.error("❌ Teste API:", error));
+}
+
+// Função de debug para verificar o estado
+function debugEstado() {
+    const termos = document.getElementById('aceitar-termos');
+    console.log('=== DEBUG ESTADO ===');
+    console.log('Email válido:', emailValido);
+    console.log('Usuário válido:', usuarioValido);
+    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox não encontrado');
+    console.log('Conta existente:', !!contaExistente);
+    console.log('Pode avançar:', (emailValido && usuarioValido && termos?.checked) || contaExistente);
 }

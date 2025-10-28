@@ -5,6 +5,9 @@ let currentStep = 1;
 let isLoading = false;
 let emailValido = false;
 let usuarioValido = false;
+let senhaValida = false;
+let confirmacaoSenhaValida = false;
+let cpfValido = false;
 let contaExistente = null;
 
 // URL base da API
@@ -27,6 +30,8 @@ function initializePage() {
     updateActiveNavigation();
     setupEventListeners();
     animatePageElements();
+    // Inicializa o botão como desabilitado
+    atualizarBotaoProximo();
 }
 
 function updateActiveNavigation() {
@@ -88,7 +93,7 @@ function setupEventListeners() {
     const planInputs = document.querySelectorAll('input[name="plano"]');
     planInputs.forEach(input => input.addEventListener("change", handlePlanSelection));
     
-    // Validação em tempo real
+    // ✅ CORREÇÃO: Validação em tempo real em TODOS os campos
     setupRealTimeValidation();
     
     console.log("✅ Event listeners configurados");
@@ -127,14 +132,21 @@ function atualizarBotaoProximo() {
     if (btnNext) {
         const termosCheckbox = document.getElementById('aceitar-termos');
         const termosAceitos = termosCheckbox ? termosCheckbox.checked : false;
-        const podeAvançar = ((emailValido && usuarioValido && termosAceitos) || contaExistente);
+        
+        // ✅ CORREÇÃO: Verifica todos os campos obrigatórios
+        const todosCamposPreenchidos = emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido;
+        const podeAvançar = (todosCamposPreenchidos && termosAceitos) || contaExistente;
         
         btnNext.disabled = !podeAvançar;
         
         console.log("🔍 Estado do botão próximo:", {
             emailValido,
             usuarioValido, 
+            senhaValida,
+            confirmacaoSenhaValida,
+            cpfValido,
             termosAceitos,
+            todosCamposPreenchidos,
             contaExistente: !!contaExistente,
             podeAvançar,
             btnDisabled: btnNext.disabled
@@ -165,13 +177,27 @@ async function verificarDadosExistente(tipo, valor) {
 }
 
 // ================================
-// Validação em Tempo Real
+// Validação em Tempo Real (CORRIGIDA)
 // ================================
 function setupRealTimeValidation() {
     const emailInput = document.getElementById("email");
     const usuarioInput = document.getElementById("nome_chefe");
+    const senhaInput = document.getElementById("senha");
+    const confirmarSenhaInput = document.getElementById("confirmar_senha");
+    const cpfInput = document.getElementById("cpf");
     
+    // Validação de Email
     if (emailInput) {
+        emailInput.addEventListener("input", function() {
+            if (this.value && isValidEmail(this.value)) {
+                emailValido = true;
+                clearFieldError("email");
+            } else {
+                emailValido = false;
+            }
+            atualizarBotaoProximo();
+        });
+        
         emailInput.addEventListener("blur", async function() {
             if (this.value && isValidEmail(this.value)) {
                 const resultado = await verificarDadosExistente('email', this.value);
@@ -193,9 +219,20 @@ function setupRealTimeValidation() {
         });
     }
     
+    // Validação de Usuário
     if (usuarioInput) {
+        usuarioInput.addEventListener("input", function() {
+            if (this.value.trim().length >= 3) {
+                usuarioValido = true;
+                clearFieldError("nome_chefe");
+            } else {
+                usuarioValido = false;
+            }
+            atualizarBotaoProximo();
+        });
+        
         usuarioInput.addEventListener("blur", async function() {
-            if (this.value.trim()) {
+            if (this.value.trim().length >= 3) {
                 const resultado = await verificarDadosExistente('usuario', this.value);
                 
                 if (resultado.existe) {
@@ -207,6 +244,62 @@ function setupRealTimeValidation() {
                 }
                 atualizarBotaoProximo();
             }
+        });
+    }
+    
+    // Validação de Senha
+    if (senhaInput) {
+        senhaInput.addEventListener("input", function() {
+            if (this.value.length >= 6) {
+                senhaValida = true;
+                clearFieldError("senha");
+            } else {
+                senhaValida = false;
+                showFieldError("senha", "Senha deve ter pelo menos 6 caracteres");
+            }
+            
+            // Revalida confirmação de senha
+            const confirmarSenha = document.getElementById("confirmar_senha");
+            if (confirmarSenha && confirmarSenha.value) {
+                if (confirmarSenha.value !== this.value) {
+                    confirmacaoSenhaValida = false;
+                    showFieldError("confirmar_senha", "As senhas não coincidem");
+                } else {
+                    confirmacaoSenhaValida = true;
+                    clearFieldError("confirmar_senha");
+                }
+            }
+            
+            atualizarBotaoProximo();
+        });
+    }
+    
+    // Validação de Confirmação de Senha
+    if (confirmarSenhaInput) {
+        confirmarSenhaInput.addEventListener("input", function() {
+            const senha = document.getElementById("senha").value;
+            if (this.value === senha && senha.length >= 6) {
+                confirmacaoSenhaValida = true;
+                clearFieldError("confirmar_senha");
+            } else {
+                confirmacaoSenhaValida = false;
+                showFieldError("confirmar_senha", "As senhas não coincidem");
+            }
+            atualizarBotaoProximo();
+        });
+    }
+    
+    // Validação de CPF
+    if (cpfInput) {
+        cpfInput.addEventListener("input", function() {
+            const cpfLimpo = this.value.replace(/\D/g, "");
+            if (cpfLimpo.length === 11 && isValidCPF(this.value)) {
+                cpfValido = true;
+                clearFieldError("cpf");
+            } else {
+                cpfValido = false;
+            }
+            atualizarBotaoProximo();
         });
     }
 }
@@ -264,6 +357,9 @@ function showContaExistente(gestor) {
     // Permite avançar com o botão normal também
     emailValido = true;
     usuarioValido = true;
+    senhaValida = true;
+    confirmacaoSenhaValida = true;
+    cpfValido = true;
     atualizarBotaoProximo();
     
     console.log("✅ Conta existente configurada");
@@ -929,7 +1025,7 @@ function debugEstado() {
     console.log('=== DEBUG ESTADO ===');
     console.log('Email válido:', emailValido);
     console.log('Usuário válido:', usuarioValido);
-    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox não encontrado');
-    console.log('Conta existente:', !!contaExistente);
-    console.log('Pode avançar:', (emailValido && usuarioValido && termos?.checked) || contaExistente);
-}
+    console.log('Senha válida:', senhaValida);
+    console.log('Confirmação senha válida:', confirmacaoSenhaValida);
+    console.log('CPF válido:', cpfValido);
+    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox

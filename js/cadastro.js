@@ -1028,4 +1028,8 @@ function debugEstado() {
     console.log('Senha válida:', senhaValida);
     console.log('Confirmação senha válida:', confirmacaoSenhaValida);
     console.log('CPF válido:', cpfValido);
-    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox
+    console.log('Termos aceitos:', termos ? termos.checked : 'checkbox não encontrado');
+    console.log('Todos campos preenchidos:', emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido);
+    console.log('Conta existente:', !!contaExistente);
+    console.log('Pode avançar:', (emailValido && usuarioValido && senhaValida && confirmacaoSenhaValida && cpfValido && termos?.checked) || contaExistente);
+}
